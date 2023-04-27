@@ -1,0 +1,24 @@
+<div class="row bg-primary bg-opacity-25" style="text-align: center;">
+    <p class="text-bg-primary">تعیین وضعیت نوع شرکت در مسابقه</p>
+    <form method="post" action="{% url 'change_userType' %}">
+        {% csrf_token %}
+        <div class="input-group p-4 justify-content-around">
+            <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" value="1" autocomplete="off" {% if request.user.is_capitan %} checked {% endif %}>
+            <label class="btn btn-outline-success" for="success-outlined">کاپیتان هستم</label>
+            <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" value="0" autocomplete="off" {% if not request.user.is_capitan %} checked {% endif %} >
+            <label class="btn btn-outline-danger" for="danger-outlined">عضو عادی هستم</label>
+        </div>
+        <!-- if user is capitan -->
+        {% if request.user.is_capitan %}
+            <div class="input-group justify-content-center">
+                <input id="groupName-inp" class="form-control" type="text" placeholder="نام تیم شما">
+             </div>
+        {% endif %}
+        <div class="input-group justify-content-center p-3">
+            <button type="submit" class="btn customcolor2">تغییر بده !</button>
+        </div>
+        <div class="alert alert-danger d-none" id="warningNormalUserAlert" role="alert">
+            با انتخاب عضو عادی، تیمی که به نام شما ثبت شده است پاک شده و برای شرکت در مسابقه میبایست حتما عضو تیم دیگری شوید
+        </div>
+    </form>
+</div>

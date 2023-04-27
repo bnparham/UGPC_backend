@@ -21,7 +21,7 @@
                 {% render_partial 'links_module.views.links_component' %}
                 </div>
                 <div class="d-none d-lg-flex d-grid gap-2" id="navbarAccount">
-                <button class="btn bg-login">خوش اومدی {{ request.user.username }}</button>
+                <button class="btn bg-login">خوش اومدی {{ user.username }}</button>
                 <a href="{% url 'logout_page' %}" class="btn btn-danger">خروج</a>
                 </div>
             </div>
@@ -40,17 +40,25 @@
                 <div class="row">
                     <!-- user Info -->
                     <div class="col-md-5 offset-2 bg-white bg-opacity-75 d-flex flex-column p-5 lh-lg">
-                        <p><span class="fw-bold">نام کاربری : </span> Amir</p>
-                        <p><span class="fw-bold">ایمیل : </span>Amir@gmail.com</p>
+                        <p><span class="fw-bold">نام کاربری : </span> {{ user.username }}</p>
+                        <p><span class="fw-bold">ایمیل : </span>{{ user.email }}</p>
                         <!-- if has team -->
+                        {% if user.has_team %}
                         <p><span class="fw-bold">وضعیت تیم :</span> عضو تیم ملوان <i class="fa fa-check" style="font-size:24px;color:#369789"></i> </p>
-                        <!-- if has not team -->
+                            {% else %}
+                            <!-- if has not team -->
                         <p><span class="fw-bold">وضعیت تیم :</span> بدون عضویت در تیم <i class="fa fa-close" style="font-size:24px;color:rgb(190, 24, 24)"></i> </p>
+                        {% endif %}
                         <!-- show if user is capitan -->
-                        <p><span class="fw-bold"> شرکت به عنوان : </span> کاپیتان <i class="fa fa-user-circle" style="font-size:24px;color:#188cbe"></i></p>
-                        <!-- show if user is memeber -->
+                        {% if user.is_capitan %}
+                             <p><span class="fw-bold"> شرکت به عنوان : </span> کاپیتان <i class="fa fa-user-circle" style="font-size:24px;color:#188cbe"></i></p>
+                            {% else %}
+                            <!-- show if user is memeber -->
                         <p><span class="fw-bold"> شرکت به عنوان : </span>  عضو عادی <i class="fa fa-user-circle-o" style="font-size:24px;color:#188cbe"></i></p>
-                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#LeaveTeam_form_ModalLabel">انصراف از تیم</button>
+                        {% endif %}
+                        {% if user.has_team %}
+                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#LeaveTeam_form_ModalLabel">انصراف از تیم</button>
+                        {% endif %}
                         <!-- LeaveTeam Modal -->
                         <div dir="ltr" class="modal fade" id="LeaveTeam_form_ModalLabel" tabindex="-1" aria-labelledby="LeaveTeam_form_ModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -102,29 +110,10 @@
                     <!-- user Settings -->
                     <div class="col-md-5 p-sm-5 ">
                         <!-- user Type -->
-                        <div class="row bg-primary bg-opacity-25" style="text-align: center;">
-                            <p class="text-bg-primary">تعیین وضعیت نوع شرکت در مسابقه</p>
-                            <form>
-                                <div class="input-group p-4 justify-content-around">
-                                    <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" checked>
-                                    <label class="btn btn-outline-success" for="success-outlined">کاپیتان هستم</label>
-                                    <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off">
-                                    <label class="btn btn-outline-danger" for="danger-outlined">عضو عادی هستم</label>
-                                </div>
-                                <!-- if user is capitan -->
-                                <div class="input-group justify-content-center">
-                                    <input id="groupName-inp" class="form-control" type="text" placeholder="نام تیم شما">
-                                </div>
-                                <div class="input-group justify-content-center p-3">
-                                    <button type="submit" class="btn customcolor2">تغییر بده !</button>
-                                </div>
-                                <div class="alert alert-danger d-none" id="warningNormalUserAlert" role="alert">
-                                    با انتخاب عضو عادی، گروهی که به نام شما ثبت شده است پاک شده و برای شرکت در مسابقه میبایست حتما عضو تیم دیگری شوید
-                                </div>
-                            </form>
-                        </div>
-                        <!-- Capitan Section - Add teamMate -->
-                        <div class="row mt-sm-5 bg-warning bg-opacity-25 justify-content-center">
+                        {% render_partial 'account_module.views.changeUserType' %}
+                        {% if user.is_capitan %}
+                            <!-- Capitan Section - Add teamMate -->
+                            <div class="row mt-sm-5 bg-warning bg-opacity-25 justify-content-center">
                             <p class="text-bg-warning text-white" style="text-align: center;">
                                 مدیریت اعضای گروه
                             </p>
@@ -184,7 +173,8 @@
                             </div>
                             <!-- add teamMate form Modal -->
                         </div>
-                        <!-- Normal User Section -->
+                            {% else %}
+                            <!-- Normal User Section -->
                         <div class="row mt-md-5 bg-warning bg-opacity-25 justify-content-center">
                             <p class="text-bg-warning text-white" style="text-align: center;">
                                 بخش دعوت نامه های شما
@@ -229,6 +219,7 @@
                             </div>
                             <!-- AccpentInvite form Modal -->
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

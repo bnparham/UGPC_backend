@@ -4,6 +4,8 @@ from django.db import models
 class User(AbstractUser):
     uid = models.CharField(max_length=20, verbose_name="کد دانشجویی")
     email_activation_code = models.CharField(max_length=100, verbose_name="کد فعال سازی")
+    is_capitan = models.BooleanField(verbose_name="شرکت به عنوان کاپیتان", default=False)
+    has_team = models.BooleanField(verbose_name="تیم دارد/ندارد", default=False)
 
     class Meta:
         verbose_name = "کاربر"

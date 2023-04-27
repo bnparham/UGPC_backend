@@ -91,3 +91,16 @@ class logoutView(View):
         request.session["logout_msg"] = True
         request.session.set_expiry(1)
         return redirect(reverse("home-page"))
+
+class changeUserType(View):
+    def get(self, request):
+        return render(request, "account_module/userType.html")
+    def post(selfs, request):
+        is_cap = int(request.POST.get("options-outlined"))
+        user:User = User.objects.get(email__iexact=request.user.email)
+        if(is_cap == 1 and not user.is_capitan):
+            user.is_capitan = True
+        elif(is_cap == 0 and user.is_capitan):
+            user.is_capitan = False
+        user.save()
+        return redirect(reverse("userPanel"))
