@@ -43,8 +43,13 @@
                         <p><span class="fw-bold">نام کاربری : </span> {{ user.username }}</p>
                         <p><span class="fw-bold">ایمیل : </span>{{ user.email }}</p>
                         <!-- if has team -->
-                        {% if user.has_team %}
+                        {% if user.has_team and user.is_capitan %}
                         <p><span class="fw-bold">وضعیت تیم :</span> عضو تیم ملوان <i class="fa fa-check" style="font-size:24px;color:#369789"></i> </p>
+                            {% elif user.is_capitan and not user.has_team %}
+                             <p><span class="fw-bold">وضعیت تیم :</span> تیم جدید - بدون اسم <i class="fa fa-check" style="font-size:24px;color:#369789"></i> </p>
+                            <div class="alert alert-danger" role="alert">
+                              لطفا نام تیم جدید خود را ثبت کنید
+                            </div>
                             {% else %}
                             <!-- if has not team -->
                         <p><span class="fw-bold">وضعیت تیم :</span> بدون عضویت در تیم <i class="fa fa-close" style="font-size:24px;color:rgb(190, 24, 24)"></i> </p>
