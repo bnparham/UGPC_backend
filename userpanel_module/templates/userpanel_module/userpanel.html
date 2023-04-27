@@ -1,5 +1,6 @@
 {% extends "shared/_layout.html" %}
 {% load static %}
+{% load render_partial %}
 {% block title %}
     حساب کاربری {{ request.user.username }}
 {% endblock %}
@@ -16,21 +17,12 @@
                 <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-lg-center" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">صفحه اصلی</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#">رویداد ها</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#"> ارتباط با ما</a>
-                    </li>
-                </ul>
+                    {#   nav bar linkns here    #}
+                {% render_partial 'links_module.views.links_component' %}
                 </div>
                 <div class="d-none d-lg-flex d-grid gap-2" id="navbarAccount">
-                <button class="btn bg-login">خوش اومدی Amir</button>
-                <button class="btn btn-danger">خروج</button>
+                <button class="btn bg-login">خوش اومدی {{ request.user.username }}</button>
+                <a href="{% url 'logout_page' %}" class="btn btn-danger">خروج</a>
                 </div>
             </div>
         </nav>

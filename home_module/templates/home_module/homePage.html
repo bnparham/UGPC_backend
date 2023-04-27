@@ -18,27 +18,8 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-lg-center" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">صفحه اصلی</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">رویداد ها</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> ارتباط با ما</a>
-                </li>
-                <div class="d-flex d-md-none d-grid gap-2 justify-content-center">
-                    {% if request.user.is_authenticated %}
-                        <button class="btn bg-login">خوش اومدی {{ request.user.username }}</button>
-                        <a href="{% url 'logout_page' %}" class="btn btn-danger">خروج</a>
-                        {% else %}
-                        <button class="btn bg-login w-25" data-bs-toggle="modal" data-bs-target="#Login_form_Modal">ورود</button>
-                        <button class="btn bg-register w-25" data-bs-toggle="modal" data-bs-target="#Register_form_Modal">عضویت</button>
-                    {% endif %}
-
-                </div>
-              </ul>
+                {#   nav bar linkns here    #}
+                {% render_partial 'links_module.views.links_component' %}
             </div>
             <div class="d-none d-lg-flex d-grid gap-2" id="navbarAccount">
                 {% if request.user.is_authenticated %}

@@ -1,0 +1,25 @@
+<ul class="navbar-nav">
+                {% for public in public_links %}
+                    <li class="nav-item">
+                  <a class="nav-link {% if public.is_active %}active{% endif %}" aria-current="page" href="{{ public.url_address }}">{{ public.url_title }}</a>
+                    </li>
+                {% endfor %}
+                {% if request.user.is_authenticated %}
+                    {% for privet in privet_links %}
+                        <li class="nav-item">
+                        <a class="nav-link {% if privet.is_active %}active{% endif %}" aria-current="page" href="{{ privet.url_address }}">{{ privet.url_title }}</a>
+                    </li>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="d-flex d-md-none d-grid gap-2 justify-content-center">
+                    {% if request.user.is_authenticated %}
+                        <button class="btn bg-login">خوش اومدی {{ request.user.username }}</button>
+                        <a href="{% url 'logout_page' %}" class="btn btn-danger">خروج</a>
+                        {% else %}
+                        <button class="btn bg-login w-25" data-bs-toggle="modal" data-bs-target="#Login_form_Modal">ورود</button>
+                        <button class="btn bg-register w-25" data-bs-toggle="modal" data-bs-target="#Register_form_Modal">عضویت</button>
+                    {% endif %}
+
+                </div>
+              </ul>
