@@ -112,6 +112,15 @@ class changeUserType(View):
         findUserTeam = teamsModel.objects.filter(capitan=user).exists()
         if is_cap == 1 and not user.is_capitan:
             user.is_capitan = True
+            findGroupThatHasThisUser = teamsModel.objects.filter(Q(teamMate1=user) | Q(teamMate2=user)).exists()
+            if(findGroupThatHasThisUser):
+                try:
+                    t = teamsModel.objects.get(teamMate1=user)
+                    t.teamMate1 = None
+                except:
+                    t = teamsModel.objects.get(teamMate2=user)
+                    t.teamMate2 = None
+                t.save()
             user.save()
         elif is_cap == 0 and user.is_capitan:
             user.is_capitan = False

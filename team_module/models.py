@@ -12,4 +12,5 @@ class inviteModel(models.Model):
     sender = models.ForeignKey(User, verbose_name="ارسال کننده", on_delete=models.CASCADE, related_name="sender")
     reciver = models.ForeignKey(User, verbose_name="دریافت کننده", on_delete=models.CASCADE, related_name="reciver")
     is_accept = models.BooleanField(default=False, verbose_name="قبول کردن/نکردن")
+    invite_id = models.CharField(verbose_name="شناسه دعوت", max_length=100, default=None, null=True)
 
