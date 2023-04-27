@@ -5,9 +5,10 @@ from django.views import View
 from .models import User
 from django.utils.crypto import get_random_string
 from django.contrib.auth import login,logout
+from django.db.models import Q
 
 from account_module.forms import Register_Form,Login_Form
-
+from team_module.models import teamsModel
 
 class RegisterView(View):
     def get(self, request):
@@ -94,13 +95,40 @@ class logoutView(View):
 
 class changeUserType(View):
     def get(self, request):
-        return render(request, "account_module/userType.html")
-    def post(selfs, request):
+        user:User = User.objects.get(email__iexact=request.user.email)
+        findUserTeam = teamsModel.objects.filter(capitan=user).exists()
+        if(findUserTeam):
+            userTeamName = teamsModel.objects.get(capitan=user).teamName
+        else:
+            userTeamName = False
+        context = {
+            "userTeamName" : userTeamName
+        }
+        return render(request, "account_module/userType.html", context)
+
+    def post(self, request):
         is_cap = int(request.POST.get("options-outlined"))
         user:User = User.objects.get(email__iexact=request.user.email)
-        if(is_cap == 1 and not user.is_capitan):
+        findUserTeam = teamsModel.objects.filter(capitan=user).exists()
+        if is_cap == 1 and not user.is_capitan:
             user.is_capitan = True
-        elif(is_cap == 0 and user.is_capitan):
+            user.save()
+        elif is_cap == 0 and user.is_capitan:
             user.is_capitan = False
-        user.save()
+            user.has_team = False
+            if findUserTeam:
+                teamsModel.objects.filter(capitan=user).delete()
+            user.save()
+        elif is_cap == 1 and user.is_capitan:
+            group_name = request.POST.get("teamName")
+            if findUserTeam:
+                teamName = teamsModel.objects.get(capitan=user)
+                if teamName.teamName != group_name and group_name != "":
+                    teamName.teamName = group_name
+                    teamName.save()
+            else:
+                newTeam = teamsModel(capitan=user, teamName=group_name, teamMate1=None, teamMate2=None)
+                user.has_team = True
+                newTeam.save()
+                user.save()
         return redirect(reverse("userPanel"))

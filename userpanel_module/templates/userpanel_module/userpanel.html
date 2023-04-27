@@ -43,9 +43,9 @@
                         <p><span class="fw-bold">نام کاربری : </span> {{ user.username }}</p>
                         <p><span class="fw-bold">ایمیل : </span>{{ user.email }}</p>
                         <!-- if has team -->
-                        {% if user.has_team and user.is_capitan %}
-                        <p><span class="fw-bold">وضعیت تیم :</span> عضو تیم ملوان <i class="fa fa-check" style="font-size:24px;color:#369789"></i> </p>
-                            {% elif user.is_capitan and not user.has_team %}
+                        {% if userTeam_name %}
+                        <p><span class="fw-bold">وضعیت تیم :</span> عضو تیم {{ userTeam_name }} <i class="fa fa-check" style="font-size:24px;color:#369789"></i> </p>
+                            {% elif user.is_capitan and  user.has_team == False %}
                              <p><span class="fw-bold">وضعیت تیم :</span> تیم جدید - بدون اسم <i class="fa fa-check" style="font-size:24px;color:#369789"></i> </p>
                             <div class="alert alert-danger" role="alert">
                               لطفا نام تیم جدید خود را ثبت کنید
@@ -61,38 +61,25 @@
                             <!-- show if user is memeber -->
                         <p><span class="fw-bold"> شرکت به عنوان : </span>  عضو عادی <i class="fa fa-user-circle-o" style="font-size:24px;color:#188cbe"></i></p>
                         {% endif %}
-                        {% if user.has_team %}
-                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#LeaveTeam_form_ModalLabel">انصراف از تیم</button>
-                        {% endif %}
-                        <!-- LeaveTeam Modal -->
-                        <div dir="ltr" class="modal fade" id="LeaveTeam_form_ModalLabel" tabindex="-1" aria-labelledby="LeaveTeam_form_ModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header modal-header-CustomStyle">
-                                <h1 class="modal-title fs-5" id="Login_form_ModalLabel">  توجه</h1>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                <form id="form-modal" class="d-flex flex-column align-items-center w-100">
-                                    <div class="alert alert-warning m-3 text-center" id="successFoundUserAlert" role="alert">
-                                        آیا از انصراف از حضور در تیم ملوان مطمئن هستید؟
-                                    </div>
-                                    <button type="submit" class="btn customcolor3 btn-lg"> قبول دارم</button>
-                                </form>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        <!-- LeaveTeam form Modal -->
                         <!-- if has team or is capitan -->
                         <p><span class="fw-bold"> اطلاعات هم تیمی های شما : </span> </p>
                         <ul class="pe-5">
-                            <li class="py-2"> - کاربر اول</li>
-                            <li class="py-2"> - کاربر دوم</li>
+                            {% if user == team.capitan %}
+                                <li class="py-2"> هم تیمی : {{ team.teamMate1}}</li>
+                            <li class="py-2"> هم تیمی :  {{ team.teamMate2 }}</li>
+                            {% elif user == team.teamMate1%}
+                                <li class="py-2"> هم تیمی :  {{ team.capitan}}</li>
+                            <li class="py-2"> هم تیمی :  {{ team.teamMate2 }}</li>
+                            {% elif user == team.teamMate2 %}
+                                <li class="py-2">  هم تیمی : {{ team.capitan}}</li>
+                            <li class="py-2"> هم تیمی : {{ team.teamMate1 }}</li>
+                            {% endif %}
+{#                            <li class="py-2"> - کاربر اول</li>#}
+{#                            <li class="py-2"> - کاربر دوم</li>#}
                         </ul>
                         <p style="text-align: center;">
                             <span class="fw-bold">زمان باقی مانده تا شروع مسابقه :</span>
-                            </p>
+                        </p>
                         <div class="d-flex flex-row-reverse justify-content-center" id="timer">
                             <div id="day-container" class="d-flex flex-column align-items-center p-3">
                                 <div id="days" style="font-size: 1.5rem;">00</div>
@@ -127,12 +114,14 @@
                             </p>
                             <ul class="text-white pe-md-5">
                                 <li class="py-2 input-group justify-content-between align-items-center">
-                                    <p class="fs-5 m-0">سجاد - sajjad.rasoli@gmail.com</p>
-                                    <button class="btn btn-danger">حذف از گروه</button>
+                                    {% if team.teamMate1 != None %}
+                                        <p class="fs-5 m-0">{{ team.teamMate1 }}</p>
+                                    {% endif %}
                                 </li>
-                                <li class="py-2 input-group justify-content-between align-items-center">
-                                    <p class="fs-5 m-0">سجاد - sajjad.rasoli@gmail.com</p>
-                                    <button class="btn btn-danger">حذف از گروه</button>
+                            <li class="py-2 input-group justify-content-between align-items-center">
+                                    {% if team.teamMate2 != None %}
+                                        <p class="fs-5 m-0">{{ team.teamMate2 }}</p>
+                                    {% endif %}
                                 </li>
                             </ul>
                             <button class="btn customcolor3 w-50 m-4" data-bs-toggle="modal" data-bs-target="#addTeamMate_form_ModalLabel">
@@ -147,36 +136,35 @@
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                    <form id="form-modal" class="d-flex flex-column align-items-center w-100">
+                                    <form action="{% url 'inviteView' %}" method="post" id="form-modal" class="d-flex flex-column align-items-center w-100">
+                                        {% csrf_token %}
                                         <div class="mb-3 w-75 text-center">
                                         <label for="exampleInputEmail1" class="form-label">آدرس ایمیل هم تیمی</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1">
+                                        <input name="InviteEmail" type="email" class="form-control" id="exampleInputEmail1">
                                         </div>
                                         <!-- if status is true show this button -->
                                         <button type="submit" class="btn customcolor3 btn-lg"> ارسال درخواست</button>
                                         <!-- check type of user in database -->
-                                        <div class="alert alert-danger m-3" id="warningNotFoundUserAlert" role="alert">
-                                            کاربری با آدرس ایمیل وارد شده یافت نشد
-                                        </div>
-                                        <div class="alert alert-danger m-3 text-center" id="warningNotFoundUserAlert" role="alert">
-                                            کاربر : امیر حسین رحمانی  - به عنوان کاپیتان شرکت کرده است
-                                        </div>
-                                        <div class="alert alert-success m-3 text-center" id="successFoundUserAlert" role="alert">
-                                            کاربر : امیر حسین رحمانی - بدون تیم
-                                            <br>
-                                            دعوت نامه ارسال شد
-                                        </div>
-                                        <div class="alert alert-warning m-3 text-center" id="successFoundUserAlert" role="alert">
-                                            کاربر : امیر حسین رحمانی -  عضو تیم
-                                            <br>
-                                            دعوت نامه ارسال شد
-                                        </div>
                                     </form>
                                     </div>
                                 </div>
                                 </div>
                             </div>
                             <!-- add teamMate form Modal -->
+                            {% if send_invite %}
+                                <div class="alert alert-success" role="alert">
+                              دعوت نامه با موفقیت ارسال شد
+                            </div>
+                                {% elif user_notFound %}
+                                <div class="alert alert-danger" role="alert">
+                              کاربری با ایمیل وارد شده یافت نشد
+                            </div>
+                                {% elif can_not_send_cap_invite %}
+                                <div class="alert alert-danger" role="alert">
+                              امکان ارسال دعوت نامه به کاپیتان ها وجود ندارد
+                            </div>
+                            {% endif %}
+
                         </div>
                             {% else %}
                             <!-- Normal User Section -->

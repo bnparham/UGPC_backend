@@ -11,7 +11,7 @@
         <!-- if user is capitan -->
         {% if request.user.is_capitan %}
             <div class="input-group justify-content-center">
-                <input id="groupName-inp" class="form-control" type="text" placeholder="نام تیم شما">
+                <input id="groupName-inp" class="form-control" name="teamName" type="text" placeholder="نام تیم شما" value="{% if userTeamName %} {{ userTeamName }}{% endif %}">
              </div>
         {% endif %}
         <div class="input-group justify-content-center p-3">

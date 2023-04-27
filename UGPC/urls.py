@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('home_module.urls')),
     path('account/', include('account_module.urls')),
     path('account/', include("userpanel_module.urls")),
+    path('account/', include('team_module.urls'))
 ]
