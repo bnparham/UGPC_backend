@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django_render_partial',
     # modules
     'home_module',
-    'account_module'
+    'account_module',
+    'userpanel_module',
 ]
 
 MIDDLEWARE = [

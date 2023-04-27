@@ -1,0 +1,247 @@
+{% extends "shared/_layout.html" %}
+{% load static %}
+{% block title %}
+    حساب کاربری {{ request.user.username }}
+{% endblock %}
+{#header#}
+{% block header %}
+    <header style="background-image: url({% static 'Images/3-d5.jpg' %}">
+        <!-- navbar -->
+        <nav dir="rtl" class="navbar navbar-expand-lg bg-custom navbar-dark py-3">
+            <div class="container-fluid d-md-flex">
+                <a class="navbar-brand d-flex align-content-center flex-grow-1 justify-content-center flex-lg-grow-0" href="#">
+                <img src="{% static 'Images/logo1.svg' %}" width="100" height="20">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-lg-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">صفحه اصلی</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#">رویداد ها</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#"> ارتباط با ما</a>
+                    </li>
+                </ul>
+                </div>
+                <div class="d-none d-lg-flex d-grid gap-2" id="navbarAccount">
+                <button class="btn bg-login">خوش اومدی Amir</button>
+                <button class="btn btn-danger">خروج</button>
+                </div>
+            </div>
+        </nav>
+        <!-- navbar -->
+    </header>
+{% endblock %}
+{#header#}
+
+{#main#}
+{% block main %}
+    <main id="userPanel-main" style="height: 100vh;background-image: url({% static 'Images/3-d5.jpg' %}">
+        <!-- userpanl -->
+        <section dir="rtl">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- user Info -->
+                    <div class="col-md-5 offset-2 bg-white bg-opacity-75 d-flex flex-column p-5 lh-lg">
+                        <p><span class="fw-bold">نام کاربری : </span> Amir</p>
+                        <p><span class="fw-bold">ایمیل : </span>Amir@gmail.com</p>
+                        <!-- if has team -->
+                        <p><span class="fw-bold">وضعیت تیم :</span> عضو تیم ملوان <i class="fa fa-check" style="font-size:24px;color:#369789"></i> </p>
+                        <!-- if has not team -->
+                        <p><span class="fw-bold">وضعیت تیم :</span> بدون عضویت در تیم <i class="fa fa-close" style="font-size:24px;color:rgb(190, 24, 24)"></i> </p>
+                        <!-- show if user is capitan -->
+                        <p><span class="fw-bold"> شرکت به عنوان : </span> کاپیتان <i class="fa fa-user-circle" style="font-size:24px;color:#188cbe"></i></p>
+                        <!-- show if user is memeber -->
+                        <p><span class="fw-bold"> شرکت به عنوان : </span>  عضو عادی <i class="fa fa-user-circle-o" style="font-size:24px;color:#188cbe"></i></p>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#LeaveTeam_form_ModalLabel">انصراف از تیم</button>
+                        <!-- LeaveTeam Modal -->
+                        <div dir="ltr" class="modal fade" id="LeaveTeam_form_ModalLabel" tabindex="-1" aria-labelledby="LeaveTeam_form_ModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header modal-header-CustomStyle">
+                                <h1 class="modal-title fs-5" id="Login_form_ModalLabel">  توجه</h1>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                <form id="form-modal" class="d-flex flex-column align-items-center w-100">
+                                    <div class="alert alert-warning m-3 text-center" id="successFoundUserAlert" role="alert">
+                                        آیا از انصراف از حضور در تیم ملوان مطمئن هستید؟
+                                    </div>
+                                    <button type="submit" class="btn customcolor3 btn-lg"> قبول دارم</button>
+                                </form>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- LeaveTeam form Modal -->
+                        <!-- if has team or is capitan -->
+                        <p><span class="fw-bold"> اطلاعات هم تیمی های شما : </span> </p>
+                        <ul class="pe-5">
+                            <li class="py-2"> - کاربر اول</li>
+                            <li class="py-2"> - کاربر دوم</li>
+                        </ul>
+                        <p style="text-align: center;">
+                            <span class="fw-bold">زمان باقی مانده تا شروع مسابقه :</span>
+                            </p>
+                        <div class="d-flex flex-row-reverse justify-content-center" id="timer">
+                            <div id="day-container" class="d-flex flex-column align-items-center p-3">
+                                <div id="days" style="font-size: 1.5rem;">00</div>
+                                <span style="font-size: 1rem;">روز</span>
+                            </div>
+                            <div id="hour-container" class="d-flex flex-column align-items-center p-3">
+                                <div id="hours" style="font-size: 1.5rem;">00</div>
+                                <span style="font-size: 1rem;">ساعت</span>
+                            </div>
+                            <div id="minutes-container" class="d-flex flex-column align-items-center p-3">
+                                <div id="minutes" style="font-size: 1.5rem;">00</div>
+                                <span style="font-size: 1rem;">دقیقه</span>
+                            </div>
+                            <div id="seconds-container" class="d-flex flex-column align-items-center p-3">
+                                <div id="seconds" style="font-size: 1.5rem;">00</div>
+                                <span style="font-size: 1rem;">ثانیه</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- user Settings -->
+                    <div class="col-md-5 p-sm-5 ">
+                        <!-- user Type -->
+                        <div class="row bg-primary bg-opacity-25" style="text-align: center;">
+                            <p class="text-bg-primary">تعیین وضعیت نوع شرکت در مسابقه</p>
+                            <form>
+                                <div class="input-group p-4 justify-content-around">
+                                    <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" checked>
+                                    <label class="btn btn-outline-success" for="success-outlined">کاپیتان هستم</label>
+                                    <input type="radio" class="btn-check" name="options-outlined" id="danger-outlined" autocomplete="off">
+                                    <label class="btn btn-outline-danger" for="danger-outlined">عضو عادی هستم</label>
+                                </div>
+                                <!-- if user is capitan -->
+                                <div class="input-group justify-content-center">
+                                    <input id="groupName-inp" class="form-control" type="text" placeholder="نام تیم شما">
+                                </div>
+                                <div class="input-group justify-content-center p-3">
+                                    <button type="submit" class="btn customcolor2">تغییر بده !</button>
+                                </div>
+                                <div class="alert alert-danger d-none" id="warningNormalUserAlert" role="alert">
+                                    با انتخاب عضو عادی، گروهی که به نام شما ثبت شده است پاک شده و برای شرکت در مسابقه میبایست حتما عضو تیم دیگری شوید
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Capitan Section - Add teamMate -->
+                        <div class="row mt-sm-5 bg-warning bg-opacity-25 justify-content-center">
+                            <p class="text-bg-warning text-white" style="text-align: center;">
+                                مدیریت اعضای گروه
+                            </p>
+                            <p class="text-white">
+                                لیست اعضای گروه :
+                            </p>
+                            <ul class="text-white pe-md-5">
+                                <li class="py-2 input-group justify-content-between align-items-center">
+                                    <p class="fs-5 m-0">سجاد - sajjad.rasoli@gmail.com</p>
+                                    <button class="btn btn-danger">حذف از گروه</button>
+                                </li>
+                                <li class="py-2 input-group justify-content-between align-items-center">
+                                    <p class="fs-5 m-0">سجاد - sajjad.rasoli@gmail.com</p>
+                                    <button class="btn btn-danger">حذف از گروه</button>
+                                </li>
+                            </ul>
+                            <button class="btn customcolor3 w-50 m-4" data-bs-toggle="modal" data-bs-target="#addTeamMate_form_ModalLabel">
+                                افزودن هم تیمی <i class="fa fa-user-plus" style="font-size:24px"></i>
+                            </button>
+                            <!-- add teamMate Modal -->
+                            <div dir="ltr" class="modal fade" id="addTeamMate_form_ModalLabel" tabindex="-1" aria-labelledby="addTeamMate_form_ModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header modal-header-CustomStyle">
+                                    <h1 class="modal-title fs-5" id="Login_form_ModalLabel"> افزودن هم تیمی</h1>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <form id="form-modal" class="d-flex flex-column align-items-center w-100">
+                                        <div class="mb-3 w-75 text-center">
+                                        <label for="exampleInputEmail1" class="form-label">آدرس ایمیل هم تیمی</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1">
+                                        </div>
+                                        <!-- if status is true show this button -->
+                                        <button type="submit" class="btn customcolor3 btn-lg"> ارسال درخواست</button>
+                                        <!-- check type of user in database -->
+                                        <div class="alert alert-danger m-3" id="warningNotFoundUserAlert" role="alert">
+                                            کاربری با آدرس ایمیل وارد شده یافت نشد
+                                        </div>
+                                        <div class="alert alert-danger m-3 text-center" id="warningNotFoundUserAlert" role="alert">
+                                            کاربر : امیر حسین رحمانی  - به عنوان کاپیتان شرکت کرده است
+                                        </div>
+                                        <div class="alert alert-success m-3 text-center" id="successFoundUserAlert" role="alert">
+                                            کاربر : امیر حسین رحمانی - بدون تیم
+                                            <br>
+                                            دعوت نامه ارسال شد
+                                        </div>
+                                        <div class="alert alert-warning m-3 text-center" id="successFoundUserAlert" role="alert">
+                                            کاربر : امیر حسین رحمانی -  عضو تیم
+                                            <br>
+                                            دعوت نامه ارسال شد
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <!-- add teamMate form Modal -->
+                        </div>
+                        <!-- Normal User Section -->
+                        <div class="row mt-md-5 bg-warning bg-opacity-25 justify-content-center">
+                            <p class="text-bg-warning text-white" style="text-align: center;">
+                                بخش دعوت نامه های شما
+                            </p>
+                            <p class="text-white">
+                                لیست دعوت نامه های ارسال شده برای شما:
+                            </p>
+                            <ul class="text-white pe-md-5">
+                                <li class="py-2 input-group justify-content-between align-items-center">
+                                    <p class="fs-5 m-0">علی امیری - از تیم ملوان</p>
+                                    <div class="btn-group gap-3">
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AccpentInvite_form_ModalLabel">پذیرفتن</button>
+                                        <button class="btn btn-danger">رد کردن</button>
+                                    </div>
+                                </li>
+                                <li class="py-2 input-group justify-content-between align-items-center">
+                                    <p class="fs-5 m-0">علی امیری - از تیم ملوان</p>
+                                    <div class="btn-group gap-3">
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AccpentInvite_form_ModalLabel">پذیرفتن</button>
+                                        <button class="btn btn-danger">رد کردن</button>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- AccpentInvite Modal -->
+                            <div dir="ltr" class="modal fade" id="AccpentInvite_form_ModalLabel" tabindex="-1" aria-labelledby="AccpentInvite_form_ModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header modal-header-CustomStyle">
+                                    <h1 class="modal-title fs-5" id="Login_form_ModalLabel">  توجه</h1>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <form id="form-modal" class="d-flex flex-column align-items-center w-100">
+                                        <div class="alert alert-warning m-3 text-center" id="successFoundUserAlert" role="alert">
+                                            با پذیرفتن این دعوت نامه شما عضو تیم جدیدی خواهید شد و از تیم قبلی خارج میشود
+                                        </div>
+                                        <button type="submit" class="btn customcolor3 btn-lg"> قبول دارم</button>
+                                    </form>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <!-- AccpentInvite form Modal -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- userpanl -->
+    </main>
+{% endblock %}
+{#main#}
