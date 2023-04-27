@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            title
+        {% endblock %}
+    </title>
+    {#  css links section #}
+    {% include 'shared/include/header_urls.html' %}
+</head>
+<body>
+    {% block header %}
+    {#   header is here  #}
+    {% endblock %}
+    {% block main %}
+    {#   main is here  #}
+    {% endblock %}
+</body>
+    {#  js links section  #}
+    {% include 'shared/include/footer_urls.html' %}
+</html>

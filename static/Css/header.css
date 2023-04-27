@@ -1,0 +1,87 @@
+header{
+    background-size: cover;
+    height: fit-content;
+}
+nav{
+    border: none;
+}
+nav #navbarNav{
+    font-size: 0.8rem;
+}
+nav #navbarAccount button{
+    font-size: .9rem !important;
+}
+.bg-custom{
+    background-color: #334257a2;
+}
+.bg-login{
+    background: #EEEEEE;
+}
+.bg-login:hover{
+    background: #eeeeeeec;
+}
+.bg-register{
+    background-color: #1EAE98;
+    color: #fff;
+}
+.bg-register:hover{
+    background-color: #1eae98d5;
+    color: #fff;
+}
+.navbar-toggler{
+    color: transparent;
+}
+@media (min-width:768px) {
+    #timer{
+        font-size:3rem;
+    }
+    #hero-container h5{
+        font-size: 2.5rem;
+    }
+    #hero-container h4{
+        font-size: 1rem;
+    }
+    #hero-btns-container button{
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width:768px) {
+    #timer{
+        font-size:1.5rem;
+    }
+    #hero-container h5{
+        font-size: 1.5rem;
+    }
+    #hero-container h4{
+        font-size: .7rem;
+    }
+    #hero-btns-container button{
+        font-size: .7rem;
+    }
+}
+@media (max-width:576px) {
+    #timer{
+        font-size:5vw;
+    }
+    #hero-container h5{
+        font-size: 5vw;
+    }
+    #hero-container h4{
+        font-size: 3vw;
+    }
+    #hero-btns-container button{
+        font-size: 3vw;
+    }   
+    .register-info-title{
+        font-size: .8rem;
+    }
+    .register-info-desc{
+        font-size: .8rem;
+    }
+}
+
+/* form modal */
+#form-modal input:focus{
+    box-shadow: none;
+}

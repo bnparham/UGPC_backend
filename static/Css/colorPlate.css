@@ -1,0 +1,26 @@
+.customcolor1{
+    background-color: #C147E9;
+    color: #fff;
+}
+.customcolor1:hover{
+    background-color: #c147e9e0;
+    color: #fff; 
+}
+
+.customcolor2{
+    background-color: #AAE3E2;
+    color: #000; 
+}
+.customcolor2:hover{
+    background-color: #aae3e2da;
+    color: #000; 
+}
+
+.customcolor3{
+    background-color: #548CA8;
+    color: #fff;
+}
+.customcolor3:hover{
+    background-color: #548ca8e2;
+    color: #fff;
+}
