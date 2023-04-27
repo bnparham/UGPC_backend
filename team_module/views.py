@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,reverse
 from django.views import View
 from account_module.models import User
-from .models import inviteModel
+from .models import inviteModel,teamsModel
 
 # Create your views here.
 
@@ -22,4 +22,29 @@ class inviteEmailView(View):
                     newInvite.save()
         else:
             request.session["user_notFound"] = True
+        return redirect(reverse("userPanel"))
+
+class acceptInvite(View):
+    def post(self, request):
+        sender = request.POST.get("sender")
+        reciver = request.POST.get("reciver")
+
+        sender = User.objects.get(email__iexact=sender)
+        reciver = User.objects.get(email__iexact=reciver)
+
+        findTeam = teamsModel.objects.get(capitan=sender)
+        if(findTeam.teamMate1 == None):
+                findTeam.teamMate1 = reciver
+                findTeam.save()
+                findInvite = inviteModel.objects.get(reciver=reciver,sender=sender)
+                findInvite.is_accept=True
+                findInvite.save()
+        elif(findTeam.teamMate2 == None):
+            findTeam.teamMate2 = reciver
+            findTeam.save()
+            findInvite = inviteModel.objects.get(reciver=reciver, sender=sender)
+            findInvite.is_accept = True
+            findInvite.save()
+        else:
+            request.session["group_is_full"] = True
         return redirect(reverse("userPanel"))
