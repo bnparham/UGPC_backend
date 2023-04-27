@@ -1,0 +1,35 @@
+  <form action="{% url 'register_page' %}" id="form-modal" class="d-flex flex-column align-items-center w-100">
+    <div class="mb-3 w-75">
+      <label for="register_name" class="form-label">
+          {{ register_form.name.label }}
+      </label>
+      {{ register_form.name }}
+    </div>
+    <div class="mb-3 w-75">
+      <label for="register_email" class="form-label">
+        {{ register_form.email.label }}
+      </label>
+      {{ register_form.email }}
+    </div>
+      <div class="mb-3 w-75">
+      <label for="register_uid" class="form-label">
+        {{ register_form.uid.label }}
+      </label>
+      {{ register_form.uid }}
+    </div>
+      <div class="mb-3 w-75">
+      <label for="register_pass" class="form-label">
+        {{ register_form.password.label }}
+      </label>
+      {{ register_form.password }}
+    </div>
+      <div class="mb-3 w-75">
+      <label for="register_re_pass" class="form-label">
+        {{ register_form.repeat_password.label }}
+      </label>
+      {{ register_form.repeat_password }}
+    </div>
+      <button type="submit" class="btn customcolor3 btn-lg">ثبت نام</button>
+      <button type="button" class="py-2 btn btn-link" data-bs-target="#Login_form_Modal" data-bs-toggle="modal" style="text-decoration: none;">وارد حساب کاربریت شو</button>
+  </form>
+

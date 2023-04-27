@@ -1,0 +1,16 @@
+  <form action="{% url 'login_page' %}" id="form-modal" class="d-flex flex-column align-items-center w-100">
+    <div class="mb-3 w-75">
+      <label for="login_email" class="form-label">
+          {{ login_form.email.label }}
+      </label>
+      {{ login_form.email }}
+    </div>
+    <div class="mb-3 w-75">
+      <label for="login_pass" class="form-label">
+        {{ login_form.password.label }}
+      </label>
+      {{ login_form.password }}
+    </div>
+    <button type="submit" class="btn customcolor3 btn-lg">ورود</button>
+    <button type="button" class="py-2 btn btn-link" data-bs-target="#Register_form_Modal" data-bs-toggle="modal" style="text-decoration: none;">حساب کاربری نداری؟</button>
+  </form>

@@ -1,5 +1,6 @@
 {% extends 'shared/_layout.html' %}
 {% load static %}
+{% load render_partial %}
 
 {% block title %}
     صفحه اصلی
@@ -45,19 +46,9 @@
                       <h1 class="modal-title fs-5" id="Login_form_ModalLabel">ورود به سایت</h1>
                       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                      <form id="form-modal" class="d-flex flex-column align-items-center w-100">
-                        <div class="mb-3 w-75">
-                          <label for="exampleInputEmail1" class="form-label">آدرس ایمیل</label>
-                          <input type="email" class="form-control" id="exampleInputEmail1">
-                        </div>
-                        <div class="mb-3 w-75">
-                          <label for="exampleInputPassword1" class="form-label">رمز عبور</label>
-                          <input type="password" class="form-control" id="exampleInputPassword1">
-                        </div>
-                        <button type="submit" class="btn customcolor3 btn-lg">ورود</button>
-                        <button type="button" class="py-2 btn btn-link" data-bs-target="#Register_form_Modal" data-bs-toggle="modal" style="text-decoration: none;">حساب کاربری نداری؟</button>
-                      </form>
+                    <div class="modal-body modal-login">
+                        {#           render login page here             #}
+                        {% render_partial 'account_module.views.LoginVeiw' %}
                     </div>
                   </div>
                 </div>
@@ -72,27 +63,8 @@
                       <h1 class="modal-title fs-5" id="Register_form_Modal">ثبت نام در سایت</h1>
                       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                      <form id="form-modal" class="d-flex flex-column align-items-center w-100">
-                        <div class="mb-3 w-75">
-                          <label for="nameAndFamilyInput" class="form-label">نام و نام خانوادگی</label>
-                          <input type="text" class="form-control" id="nameAndFamilyInput">
-                        </div>
-                        <div class="mb-3 w-75">
-                          <label for="studentIdInput" class="form-label">شماره دانشجویی</label>
-                          <input type="text" class="form-control" id="studentIdInput">
-                        </div>
-                        <div class="mb-3 w-75">
-                          <label for="studentEmailInput" class="form-label">آدرس ایمیل</label>
-                          <input type="text" class="form-control" id="studentEmailInput">
-                        </div>
-                        <div class="mb-3 w-75">
-                          <label for="passwordInput" class="form-label">رمز عبور</label>
-                          <input type="password" class="form-control" id="passwordInput">
-                        </div>
-                        <button type="submit" class="btn customcolor3 btn-lg">ثبت نام</button>
-                        <button type="button" class="py-2 btn btn-link" data-bs-target="#Login_form_Modal" data-bs-toggle="modal" style="text-decoration: none;">وارد حساب کاربریت شو</button>
-                      </form>
+                    <div class="modal-body modal-register">
+                      {% render_partial 'account_module.views.RegisterView' %}
                     </div>
                   </div>
                 </div>

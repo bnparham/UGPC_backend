@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # installed app
     'django',
+    'django_render_partial',
     # modules
     'home_module',
+    'account_module'
 ]
 
 MIDDLEWARE = [
@@ -78,6 +80,8 @@ WSGI_APPLICATION = 'UGPC.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
+AUTH_USER_MODEL = "account_module.User"
 
 DATABASES = {
     'default': {
