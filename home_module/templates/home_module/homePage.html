@@ -29,14 +29,25 @@
                   <a class="nav-link" href="#"> ارتباط با ما</a>
                 </li>
                 <div class="d-flex d-md-none d-grid gap-2 justify-content-center">
-                  <button class="btn bg-login w-25" data-bs-toggle="modal" data-bs-target="#Login_form_Modal">ورود</button>
-                  <button class="btn bg-register w-25" data-bs-toggle="modal" data-bs-target="#Register_form_Modal">عضویت</button>
+                    {% if request.user.is_authenticated %}
+                        <button class="btn bg-login">خوش اومدی {{ request.user.username }}</button>
+                        <a href="{% url 'logout_page' %}" class="btn btn-danger">خروج</a>
+                        {% else %}
+                        <button class="btn bg-login w-25" data-bs-toggle="modal" data-bs-target="#Login_form_Modal">ورود</button>
+                        <button class="btn bg-register w-25" data-bs-toggle="modal" data-bs-target="#Register_form_Modal">عضویت</button>
+                    {% endif %}
+
                 </div>
               </ul>
             </div>
             <div class="d-none d-lg-flex d-grid gap-2" id="navbarAccount">
-              <button class="btn bg-login" data-bs-toggle="modal" data-bs-target="#Login_form_Modal">ورود</button>
-              <button class="btn bg-register" data-bs-toggle="modal" data-bs-target="#Register_form_Modal">عضویت</button>
+                {% if request.user.is_authenticated %}
+                    <button class="btn bg-login">خوش اومدی {{ request.user.username }}</button>
+                    <a href="{% url 'logout_page' %}" class="btn btn-danger">خروج</a>
+                    {% else %}
+                    <button class="btn bg-login" data-bs-toggle="modal" data-bs-target="#Login_form_Modal">ورود</button>
+                    <button class="btn bg-register" data-bs-toggle="modal" data-bs-target="#Register_form_Modal">عضویت</button>
+                {% endif %}
             </div>
               <!-- Login form Modal -->
               <div dir="ltr" class="modal fade" id="Login_form_Modal" tabindex="-1" aria-labelledby="Login_form_ModalLabel" aria-hidden="true">
@@ -79,6 +90,21 @@
             <div class="card text-bg-dark">
               <!-- <img style="filter: brightness(40%);" src="Assets/Images/3.jpg" class="card-img" alt="..."> -->
               <div class="card-img-overlay d-flex flex-column align-items-center">
+                  {% if email_pass_wrong_msg %}
+                    <div class="alert alert-danger mb-1" style="text-align: center">
+                    ایمیل یا رمز عبور وارد شده اشتباه میباشد
+                    </div>
+                {% endif %}
+                  {% if active_acc_msg %}
+                    <div class="alert alert-danger mb-1" style="text-align: center">
+                    حساب کاربری شما هنوز فعال نشده است
+                    </div>
+                {% endif %}
+                  {% if register_msg %}
+                    <div class="alert alert-success mb-1" style="text-align: center">
+                    حساب کاربری شما با موفقیت ساخته شد. جهت فعال سازی حساب بر روی لینک ارسال شده به آدرس ایمیل خود کلیک کرده و سپس وارد شوید
+                    </div>
+                {% endif %}
                 <h5 class="card-title py-5">رویداد برنامه نویسی پایتون</h5>
                 <h4 class="py-3 border border-info p-3 bg-info bg-opacity-25">&#x1F680;...یه مسابقه خفن قراره به زودی برگزار شه</h4>
                 <div class="d-flex flex-row justify-content-around align-content-center" id="timer">

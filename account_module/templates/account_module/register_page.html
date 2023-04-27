@@ -1,9 +1,16 @@
-  <form action="{% url 'register_page' %}" id="form-modal" class="d-flex flex-column align-items-center w-100">
+  <form action="{% url 'register_page' %}" method="post" id="form-modal" class="d-flex flex-column align-items-center w-100">
+      {% csrf_token %}
     <div class="mb-3 w-75">
       <label for="register_name" class="form-label">
           {{ register_form.name.label }}
       </label>
       {{ register_form.name }}
+    </div>
+      <div class="mb-3 w-75">
+      <label for="register_name" class="form-label">
+          {{ register_form.username.label }}
+      </label>
+      {{ register_form.username }}
     </div>
     <div class="mb-3 w-75">
       <label for="register_email" class="form-label">

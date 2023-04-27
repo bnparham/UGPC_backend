@@ -21,9 +21,11 @@ class RegisterView(View):
 
     def post(self, request):
         register_form = Register_Form(request.POST)
-        print(f"POST is {request.POST}")
         if(register_form.is_valid()):
             user_email = register_form.cleaned_data.get("email")
+            user_uid = register_form.cleaned_data.get("uid")
+            user_username = register_form.cleaned_data.get("username")
+            user_name = register_form.cleaned_data.get("name")
             user : bool = User.objects.filter(email__iexact=user_email).exists()
             if(user):
                 register_form.add_error("email", "ایمیل وارد شده متعلق به حساب کاربری دیگری میباشد")
@@ -33,16 +35,16 @@ class RegisterView(View):
                     email=user_email,
                     is_active=False,
                     email_activation_code=get_random_string(72),
+                    uid=user_uid,
+                    first_name=user_name,
+                    username=user_username,
                 )
                 new_user.set_password(user_pass)
                 new_user.save()
                 request.session["register_msg"] = True
                 #todo : send user activition code
-                return redirect(reverse("login_page"))
-        context = {
-            "register_form": register_form
-        }
-        return render(request, "account_module/register_page.html", context)
+                return redirect(reverse("home-page"))
+        return redirect(reverse("home-page"))
 
 class LoginVeiw(View):
     def get(self, request):
@@ -73,19 +75,19 @@ class LoginVeiw(View):
                         login(request, user)
                         return redirect(reverse("home-page"))
                     else:
-                        login_form.add_error("password", "ایمیل یا رمز عبور نادرست میباشد")
+                        # login_form.add_error("password", "ایمیل یا رمز عبور نادرست میباشد")
+                        request.session["email_pass_wrong_msg"] = True
                 else:
-                    login_form.add_error("password", "حساب کاربری شما فعال نمیباشد")
+                    # login_form.add_error("password", "حساب کاربری شما فعال نمیباشد")
+                    request.session["active_acc_msg"] = True
             else:
-                login_form.add_error("password", "ایمیل یا رمز عبور نادرست میباشد")
-        context = {
-            "login_form": login_form
-        }
-        return render(request, "account_module/login_page.html", context)
+                # login_form.add_error("password", "ایمیل یا رمز عبور نادرست میباشد")
+                request.session["email_pass_wrong_msg"] = True
+        return redirect(reverse("home-page"))
 
 class logoutView(View):
     def get(self, request):
         logout(request)
         request.session["logout_msg"] = True
         request.session.set_expiry(1)
-        return redirect(reverse("login_page"))
+        return redirect(reverse("home-page"))

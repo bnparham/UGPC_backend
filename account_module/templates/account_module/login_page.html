@@ -1,4 +1,5 @@
-  <form action="{% url 'login_page' %}" id="form-modal" class="d-flex flex-column align-items-center w-100">
+  <form action="{% url 'login_page' %}" method="post" id="form-modal" class="d-flex flex-column align-items-center w-100">
+      {% csrf_token %}
     <div class="mb-3 w-75">
       <label for="login_email" class="form-label">
           {{ login_form.email.label }}

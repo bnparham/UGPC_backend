@@ -14,6 +14,16 @@ class Register_Form(forms.Form):
             }
         ),
     )
+    username = forms.CharField(
+        label="نام کاربری",
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "id": "username",
+            }
+        ),
+    )
     email = forms.CharField(
         label="ایمیل",
         max_length=100,
@@ -30,10 +40,10 @@ class Register_Form(forms.Form):
     uid = forms.CharField(
         label="شماره دانشجویی",
         max_length=100,
-        widget=forms.EmailInput(
+        widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "id": "register_uid"
+                "id": "register_uid",
             }
         ),
     )
