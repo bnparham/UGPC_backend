@@ -203,4 +203,4 @@ class changeUserType(View):
                     user.has_team = True
                     newTeam.save()
                     user.save()
-                return redirect(reverse("userPanel"))
+        return redirect(reverse("userPanel"))
