@@ -8,4 +8,5 @@ urlpatterns = [
     path("logout/", logoutView.as_view(), name="logout_page"),
     path("changeUserType/", changeUserType.as_view(), name="change_userType"),
     path('activate/<uidb64>/<token>', RegisterView.activate, name='activate'),
+    path('editUserInfo', editUserInfo.as_view(), name="editUserInfo"),
 ]

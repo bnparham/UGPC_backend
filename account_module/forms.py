@@ -102,3 +102,48 @@ class Login_Form(forms.Form):
             }
         ),
     )
+
+class EditUserInfoForm(forms.Form):
+    name = forms.CharField(
+        label="نام و نام خانوادگی",
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "id": "register_name",
+            }
+        ),
+    )
+    username = forms.CharField(
+        label="نام کاربری",
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "id": "username",
+            }
+        ),
+    )
+    email = forms.CharField(
+        label="ایمیل",
+        max_length=100,
+        widget=forms.EmailInput(
+            attrs={
+                "class" : "form-control",
+                "id" : "register_email"
+            }
+        ),
+        validators=[
+            validators.EmailValidator(message="ایمیل صحیح نمیباشد"),
+        ]
+    )
+    uid = forms.CharField(
+        label="شماره دانشجویی",
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "id": "register_uid",
+            }
+        ),
+    )

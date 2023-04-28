@@ -15,6 +15,7 @@ class HomePageView(View):
         email_didnt_activated = request.session.get('email_didnt_activated',False)        
         failed_register_msg = request.session.get('failed_register_msg',False)
         notMatch_pass_rePass = request.session.get('notMatch_pass_rePass',False)
+        usereditinfo_successfuly = request.session.get('usereditinfo_successfuly',False)
         
         if (email_pass_wrong_msg): del (request.session["email_pass_wrong_msg"])
         if (active_acc_msg): del (request.session["active_acc_msg"])
@@ -26,6 +27,7 @@ class HomePageView(View):
         if (email_didnt_activated) : del (request.session["email_didnt_activated"])
         if (failed_register_msg) : del (request.session["failed_register_msg"])
         if(notMatch_pass_rePass) : del (request.session["notMatch_pass_rePass"])
+        if(usereditinfo_successfuly) : del (request.session["usereditinfo_successfuly"])
         
 
         context = {
@@ -39,6 +41,7 @@ class HomePageView(View):
             "email_didnt_activated" : email_didnt_activated,
             "failed_register_msg" : failed_register_msg,
             "notMatch_pass_rePass" : notMatch_pass_rePass,
+            "usereditinfo_successfuly" : usereditinfo_successfuly,
             
         }
         return render(request, 'home_module/homePage.html', context)

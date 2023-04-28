@@ -7,7 +7,7 @@ from django.utils.crypto import get_random_string
 from django.contrib.auth import login,logout
 from django.db.models import Q
 
-from account_module.forms import Register_Form,Login_Form
+from account_module.forms import Register_Form,Login_Form,EditUserInfoForm
 from team_module.models import teamsModel
 
 from django.template.loader import render_to_string
@@ -204,3 +204,31 @@ class changeUserType(View):
                     newTeam.save()
                     user.save()
         return redirect(reverse("userPanel"))
+
+class editUserInfo(View):
+    def get(self, request):
+        user = self.request.user
+        user = User.objects.get(email__iexact=user)
+        initial = {"email":user.email,"username":user.username,"name":user.first_name,"uid":user.uid}
+        edituserinfo_form = EditUserInfoForm(initial=initial)
+        context = {
+            "edit_form" : edituserinfo_form
+        }
+        return render(request, "account_module/editUserInfo.html", context)
+
+    def post(self, request):
+        edituserinfo_form = EditUserInfoForm(request.POST)
+        user = self.request.user
+        user = User.objects.get(email__iexact=user)
+        if(edituserinfo_form.is_valid()):
+            get_email = edituserinfo_form.cleaned_data.get("email")
+            get_username = edituserinfo_form.cleaned_data.get("username")
+            get_name = edituserinfo_form.cleaned_data.get("name")
+            get_uid = edituserinfo_form.cleaned_data.get("uid")
+            user.email = get_email
+            user.username = get_username
+            user.first_name = get_name
+            user.uid = get_uid
+            user.save()
+            request.session["usereditinfo_successfuly"] = True
+        return redirect(reverse("home-page"))

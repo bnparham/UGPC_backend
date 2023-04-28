@@ -1,0 +1,31 @@
+<form action="{% url 'editUserInfo' %}" method="post" id="form-modal" class="d-flex flex-column align-items-center w-100">
+    {% csrf_token %}
+    <div class="mb-3 w-75">
+          <label for="register_name" class="form-label">
+              {{ edit_form.username.label }}
+          </label>
+          {{ edit_form.username}}
+    </div>
+    <div class="mb-3 w-75">
+          <label for="register_name" class="form-label">
+              {{ edit_form.name.label }}
+          </label>
+        {{edit_form.name}}
+    </div>
+
+    <div class="mb-3 w-75">
+          <label for="register_name" class="form-label">
+              {{ edit_form.email.label }}
+          </label>
+        {{edit_form.email}}
+    </div>
+
+    <div class="mb-3 w-75">
+          <label for="register_name" class="form-label">
+              {{ edit_form.uid.label }}
+          </label>
+        {{edit_form.uid}}
+    </div>
+
+    <button type="submit" class="btn customcolor3 btn-lg">تغییر بده</button>
+</form>
