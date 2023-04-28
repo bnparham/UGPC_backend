@@ -7,6 +7,8 @@ class linksModel(models.Model):
     url_address = models.CharField(verbose_name="آدرس url", max_length=200)
     is_public = models.BooleanField(verbose_name="دسترسی عموم", default=True)
     is_active = models.BooleanField(verbose_name="برجسته شود/نشود", default=False)
+    is_modal = models.BooleanField(verbose_name="نمایش به صورت مدال", default=False)
+    modal_target_name = models.CharField(verbose_name="نام مدال", blank=True, null=True, max_length=100)
 
     class Meta:
         verbose_name = "لینک"

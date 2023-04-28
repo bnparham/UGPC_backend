@@ -81,7 +81,7 @@
                              <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#LeaveTeam_form_ModalLabel">انصراف از تیم</button>
                         {% endif %}
 
-                        <button class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#ChangeUserInfo_form_ModalLabel">ویرایش اطلاعات کاربری</button>
+{#                        <button class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#ChangeUserInfo_form_ModalLabel">ویرایش اطلاعات کاربری</button>#}
                         <!-- LeaveTeam Modal -->
                         <div dir="ltr" class="modal fade" id="LeaveTeam_form_ModalLabel" tabindex="-1" aria-labelledby="LeaveTeam_form_ModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -104,38 +104,6 @@
                             </div>
                         </div>
                         <!-- LeaveTeam form Modal -->
-
-                        <!-- changeUserInfo Modal -->
-                        <div dir="ltr" class="modal fade" id="ChangeUserInfo_form_ModalLabel" tabindex="-1" aria-labelledby="ChangeUserInfo_form_ModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header modal-header-CustomStyle">
-                                <h1 class="modal-title fs-5" id="ChangeUserInfo_form_ModalLabel">  توجه</h1>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body modal-changeUserInfo">
-                                {#  --- chnageUserInfo modal form  ---#}
-                                <form id="form-modal" class="d-flex flex-column align-items-center w-100">
-                                <div class="mb-3 w-75">
-                                      <label for="register_name" class="form-label">
-                                          ایمیل
-                                      </label>
-                                      <input type="text" class="form-control" id="nameAndFamilyInput">
-                                </div>
-                                    <div class="mb-3 w-75">
-                                      <label for="register_name" class="form-label">
-                                          نام کاربری
-                                      </label>
-                                      <input type="text" class="form-control" id="nameAndFamilyInput">
-                                </div>
-                                    <button type="submit" class="btn customcolor3 btn-lg">تغییر بده</button>
-                                </form>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        <!-- changeUserInfo Modal -->
-
                         <p style="text-align: center;">
                             <span class="fw-bold">زمان باقی مانده تا شروع مسابقه :</span>
                         </p>

@@ -6,9 +6,15 @@
                 {% endfor %}
                 {% if request.user.is_authenticated %}
                     {% for privet in privet_links %}
-                        <li class="nav-item">
-                        <a class="nav-link {% if privet.is_active %}active{% endif %}" aria-current="page" href="{{ privet.url_address }}">{{ privet.url_title }}</a>
-                    </li>
+                        {% if not privet.is_modal %}
+                            <li class="nav-item">
+                            <a class="nav-link {% if privet.is_active %}active{% endif %}" aria-current="page" href="{{ privet.url_address }}">{{ privet.url_title }}</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item">
+                            <a style="cursor: pointer" class="nav-link" data-bs-target="#{{ privet.modal_target_name}}" data-bs-toggle="modal">{{privet.url_title }}</a>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
 
