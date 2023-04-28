@@ -9,6 +9,7 @@ class linksModel(models.Model):
     is_active = models.BooleanField(verbose_name="برجسته شود/نشود", default=False)
     is_modal = models.BooleanField(verbose_name="نمایش به صورت مدال", default=False)
     modal_target_name = models.CharField(verbose_name="نام مدال", blank=True, null=True, max_length=100)
+    is_show = models.BooleanField(verbose_name="نمایش داده شود/نشود", default=True)
 
     class Meta:
         verbose_name = "لینک"

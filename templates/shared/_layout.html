@@ -12,7 +12,9 @@
 </head>
 <body>
     {#  public modals section  #}
+    {% if request.user.is_authenticated %}
     {% include 'shared/header_section.html' %}
+    {% endif %}
     {% block header %}
     {#   header is here  #}
     {% endblock %}
