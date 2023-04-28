@@ -65,14 +65,14 @@
                         <p><span class="fw-bold"> اطلاعات هم تیمی های شما : </span> </p>
                         <ul class="pe-5">
                             {% if user == team.capitan %}
-                                <li class="py-2"> هم تیمی : {{ team.teamMate1}}</li>
-                            <li class="py-2"> هم تیمی :  {{ team.teamMate2 }}</li>
+                                <li class="py-2"> هم تیمی : {{ team.teamMate1.email}} - {{ team.teamMate1.username }}</li>
+                            <li class="py-2"> هم تیمی :  {{ team.teamMate2.email}} - {{ team.teamMate2.username }}</li>
                             {% elif user == team.teamMate1%}
-                                <li class="py-2"> هم تیمی :  {{ team.capitan}}</li>
-                            <li class="py-2"> هم تیمی :  {{ team.teamMate2 }}</li>
+                                <li class="py-2"> هم تیمی :  {{ team.capitan.email}} - {{ team.capitan.username }}</li>
+                            <li class="py-2"> هم تیمی :  {{ team.teamMate2.email}} - {{ team.teamMate2.username }}</li>
                             {% elif user == team.teamMate2 %}
-                                <li class="py-2">  هم تیمی : {{ team.capitan}}</li>
-                            <li class="py-2"> هم تیمی : {{ team.teamMate1 }}</li>
+                                <li class="py-2">  هم تیمی : {{ team.capitan.email}} - {{ team.capitan.username }}</li>
+                            <li class="py-2"> هم تیمی : {{ team.teamMate1.email}} - {{ team.teamMate1.username }}</li>
                             {% endif %}
 {#                            <li class="py-2"> - کاربر اول</li>#}
 {#                            <li class="py-2"> - کاربر دوم</li>#}
