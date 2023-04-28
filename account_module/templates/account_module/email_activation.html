@@ -17,7 +17,7 @@
     <div class="d-flex justify-content-center p-5" style="text-align: right;">
         <div class="alert alert-success w-50" role="alert">
             <h4 class="alert-heading mb-4">ایمیل فعال سازی</h4>
-            <p style="font-size: 15px;">UGPC خوش اومدی به {{full_name}}</p>
+            <p style="font-size: 15px;">UGPC {{full_name}} خوش اومدی به </p>
             <p style="font-size: 15px;">جهت فعال سازی حساب کاربری ، روی لینک زیر کلیک کن</p>
             <hr>
             <a style="text-decoration: none;" href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}" class="mb-0">فعال سازی حساب کاربری</a>
