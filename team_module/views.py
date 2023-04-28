@@ -11,9 +11,9 @@ class inviteEmailView(View):
         email = request.POST.get("InviteEmail")
         user:User = User.objects.filter(email__iexact=email).exists()
         if(user):
-            is_cap = User.objects.get(email__iexact=email).is_capitan
+            is_cap = User.objects.get(email__iexact=email).has_team
             if(is_cap):
-                request.session["can_not_send_cap_invite"] = True
+                request.session["can_not_send_hasTeam_invite"] = True
             else:
                 # invite is send
                 request.session["send_invite"] = True

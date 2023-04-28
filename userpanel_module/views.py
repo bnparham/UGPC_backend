@@ -8,11 +8,11 @@ from team_module.models import teamsModel,inviteModel
 
 class userPanelView(View):
     def get(self ,request):
-        can_not_send_cap_invite = request.session.get("can_not_send_cap_invite", False)
+        can_not_send_hasTeam_invite = request.session.get("can_not_send_hasTeam_invite", False)
         send_invite = request.session.get("send_invite", False)
         user_notFound = request.session.get("user_notFound", False)
         group_is_full = request.session.get("group_is_full", False)
-        if (can_not_send_cap_invite): del (request.session["can_not_send_cap_invite"])
+        if (can_not_send_hasTeam_invite): del (request.session["can_not_send_hasTeam_invite"])
         if (send_invite): del (request.session["send_invite"])
         if (user_notFound) : del (request.session["user_notFound"])
         if (group_is_full) : del (request.session["group_is_full"])
@@ -31,7 +31,7 @@ class userPanelView(View):
             "user": user,
             "userTeam_name": teamName,
             "team": team,
-            "can_not_send_cap_invite" : can_not_send_cap_invite,
+            "can_not_send_hasTeam_invite" : can_not_send_hasTeam_invite,
             "send_invite" : send_invite,
             "user_notFound" : user_notFound,
             "invites" : invites,
