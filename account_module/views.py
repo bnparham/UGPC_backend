@@ -245,9 +245,26 @@ class ForgetPassword(View):
             user_email = forget_pass_form.cleaned_data.get('email')
             user: User = User.objects.filter(email__iexact=user_email).first()
             if user is not None:
-                request.session["sendRecoverEmail_msg"] = True
                 # send reset password email to user
-                pass
+                #todo:send email
+                #email
+                to_email=user_email
+                mail_subject = 'فراموشی رمز عبور'
+                message = render_to_string('account_module/recover_pass_email.html', {
+                    'user': user,
+                    'full_name': f'{user.first_name}',
+                    "email_activation_code" : user.email_activation_code,
+                    'domain': get_current_site(request).domain,
+                    'protocol': 'https' if request.is_secure() else 'http'
+                })
+                email = EmailMessage(mail_subject, message, to=[to_email])
+                email.content_subtype = 'html'
+
+                if email.send():
+                    request.session["sendRecoverEmail_msg"] = True
+                else:
+                    request.session["sendRecoverEmail_NotFound_msg"] = True
+
             else:
                 request.session["sendRecoverEmail_NotFound_msg"] = True
 
