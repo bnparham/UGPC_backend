@@ -21,7 +21,7 @@
                 {% render_partial 'links_module.views.links_component' %}
                 </div>
                 <div class="d-none d-lg-flex d-grid gap-2" id="navbarAccount">
-                <button class="btn bg-login">خوش اومدی {{ user.username }}</button>
+                <button class="btn bg-transparent text-white">خوش اومدی {{ user.username }}</button>
                 <a href="{% url 'logout_page' %}" class="btn btn-danger">خروج</a>
                 </div>
             </div>

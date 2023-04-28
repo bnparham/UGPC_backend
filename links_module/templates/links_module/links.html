@@ -14,7 +14,7 @@
 
                 <div class="d-flex d-md-none d-grid gap-2 justify-content-center">
                     {% if request.user.is_authenticated %}
-                        <button class="btn bg-login">خوش اومدی {{ request.user.username }}</button>
+                        <button class="btn bg-transparent text-white">خوش اومدی {{ request.user.username }}</button>
                         <a href="{% url 'logout_page' %}" class="btn btn-danger">خروج</a>
                         {% else %}
                         <button class="btn bg-login w-25" data-bs-toggle="modal" data-bs-target="#Login_form_Modal">ورود</button>
