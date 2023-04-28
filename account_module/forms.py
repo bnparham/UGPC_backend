@@ -147,3 +147,57 @@ class EditUserInfoForm(forms.Form):
             }
         ),
     )
+
+class ForgotPasswordForm(forms.Form):
+    email = forms.EmailField(
+        label='ایمیل',
+        widget=forms.EmailInput(
+            attrs={
+                "class": "form-control",
+                "id": "forgotPass_email",
+            }
+        ),
+        validators=[
+            validators.MaxLengthValidator(100),
+            validators.EmailValidator
+        ]
+)
+
+class ResetPasswordForm(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(ResetPasswordForm, self).__init__(*args, **kwargs)
+
+    password = forms.CharField(
+        label='کلمه عبور',
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "id": "resetPass_pass",
+            }
+        ),
+        validators=[
+            validators.MaxLengthValidator(100),
+        ]
+    )
+
+    confirm_password = forms.CharField(
+        label='تکرار کلمه عبور',
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "id": "resetPass_repass",
+            }
+        ),
+        validators=[
+            validators.MaxLengthValidator(100),
+        ]
+)
+    def clean_repeat_password(self):
+        password = self.cleaned_data.get("password")
+        confirm_password = self.cleaned_data.get("confirm_password")
+        if(password == confirm_password):
+            return confirm_password
+        self.request.session["notMatch_pass_rePass_In_resetPass"] = True
+        raise ValidationError("رمز عبور مطابقت ندارد")

@@ -7,7 +7,7 @@ from django.utils.crypto import get_random_string
 from django.contrib.auth import login,logout
 from django.db.models import Q
 
-from account_module.forms import Register_Form,Login_Form,EditUserInfoForm
+from account_module.forms import Register_Form, Login_Form, EditUserInfoForm, ForgotPasswordForm, ResetPasswordForm
 from team_module.models import teamsModel
 
 from django.template.loader import render_to_string
@@ -232,3 +232,67 @@ class editUserInfo(View):
             user.save()
             request.session["usereditinfo_successfuly"] = True
         return redirect(reverse("home-page"))
+
+class ForgetPassword(View):
+    def get(self, request):
+        forget_pass_form = ForgotPasswordForm()
+        context = {'forget_pass_form': forget_pass_form}
+        return render(request, 'account_module/forgot_password.html', context)
+
+    def post(self, request):
+        forget_pass_form = ForgotPasswordForm(request.POST)
+        if forget_pass_form.is_valid():
+            user_email = forget_pass_form.cleaned_data.get('email')
+            user: User = User.objects.filter(email__iexact=user_email).first()
+            if user is not None:
+                request.session["sendRecoverEmail_msg"] = True
+                # send reset password email to user
+                pass
+            else:
+                request.session["sendRecoverEmail_NotFound_msg"] = True
+
+        return redirect(reverse("home-page"))
+
+
+class ResetPassword(View):
+    def get(self, request, active_code):
+
+        reset_pass_notMatch_confirmPass = request.session.get("reset_pass_notMatch_confirmPass", False)
+        if (reset_pass_notMatch_confirmPass): del (request.session["reset_pass_notMatch_confirmPass"])
+
+        user = User.objects.filter(email_activation_code=active_code).first()
+        if user is None:
+            return redirect(reverse('home-page'))
+        reset_pass_form = ResetPasswordForm()
+        context = {
+            'reset_pass_form': reset_pass_form,
+            'user': user,
+            "reset_pass_notMatch_confirmPass" : reset_pass_notMatch_confirmPass,
+        }
+        return render(request, 'account_module/reset_password.html', context)
+
+    def post(self, request, active_code):
+        reset_pass_form = ResetPasswordForm(request.POST)
+        user: User = User.objects.filter(email_activation_code=active_code).first()
+        if reset_pass_form.is_valid():
+            if user is None:
+                return redirect(reverse('login_page'))
+            user_new_pass = reset_pass_form.cleaned_data.get('password')
+            user_new_confirmPass = reset_pass_form.cleaned_data.get("confirm_password")
+            if(user_new_pass == user_new_confirmPass):
+                user.set_password(user_new_pass)
+                user.email_activation_code = account_activation_token.make_token(user)
+                user.is_active = True
+                user.save()
+                request.session["reset_pass_success_msg"] = True
+                return redirect(reverse('home-page'))
+
+            request.session["reset_pass_notMatch_confirmPass"] = True
+            return redirect(reverse("reset_password_page" ,kwargs={"active_code":user.email_activation_code}))
+
+        context = {
+            'reset_pass_form': reset_pass_form,
+            'user': user
+        }
+
+        return render(request, 'account_module/reset_password.html', context)
