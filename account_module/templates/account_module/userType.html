@@ -20,5 +20,10 @@
         <div class="alert alert-danger d-none" id="warningNormalUserAlert" role="alert">
             با انتخاب عضو عادی، تیمی که به نام شما ثبت شده است پاک شده و برای شرکت در مسابقه میبایست حتما عضو تیم دیگری شوید
         </div>
+        {% if empty_teamName_msg %}
+            <div class="alert alert-danger" id="warningEmptyTeamName" role="alert">
+                لطفا نام تیم خود را به صورت صحیح تکمیل کنید
+            </div>
+        {% endif %}
     </form>
 </div>

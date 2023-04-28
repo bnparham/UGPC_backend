@@ -151,6 +151,9 @@ class logoutView(View):
 
 class changeUserType(View):
     def get(self, request):
+        empty_teamName_msg = request.session.get("empty_teamName_msg", False)
+        if(empty_teamName_msg): del(request.session["empty_teamName_msg"])
+
         user:User = User.objects.get(email__iexact=request.user.email)
         findUserTeam = teamsModel.objects.filter(capitan=user).exists()
         if(findUserTeam):
@@ -158,7 +161,8 @@ class changeUserType(View):
         else:
             userTeamName = False
         context = {
-            "userTeamName" : userTeamName
+            "userTeamName" : userTeamName,
+            "empty_teamName_msg" : empty_teamName_msg,
         }
         return render(request, "account_module/userType.html", context)
 
@@ -192,8 +196,11 @@ class changeUserType(View):
                     teamName.teamName = group_name
                     teamName.save()
             else:
-                newTeam = teamsModel(capitan=user, teamName=group_name, teamMate1=None, teamMate2=None)
-                user.has_team = True
-                newTeam.save()
-                user.save()
-        return redirect(reverse("userPanel"))
+                if(group_name == None or group_name == "" or len(group_name)==0):
+                    request.session["empty_teamName_msg"] = True
+                else:
+                    newTeam = teamsModel(capitan=user, teamName=group_name, teamMate1=None, teamMate2=None)
+                    user.has_team = True
+                    newTeam.save()
+                    user.save()
+                return redirect(reverse("userPanel"))
