@@ -1,4 +1,4 @@
-from  django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 class User(AbstractUser):
@@ -12,6 +12,6 @@ class User(AbstractUser):
         verbose_name_plural = "کاربران"
 
     def __str__(self):
-        if self.first_name is not "" and self.last_name is not "" :
+        if self.first_name != "" and self.last_name != "" :
             return self.get_full_name()
         return self.email
