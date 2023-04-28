@@ -137,7 +137,12 @@
                   </div>
                 </div>
                 <div id="hero-btns-container" class="btn-group-vertical gap-2 py-5">
-                  <button type="button" class="btn customcolor1 btn-lg" data-bs-toggle="modal" data-bs-target="#Register_form_Modal">ثبت نام نکردی؟ هنوز دیر نشده</button>
+                    {% if request.user.is_authenticated %}
+                         <a href="{% url 'userPanel' %}" type="button" class="btn customcolor1 btn-lg">ورود به پنل کاربری</a>
+                        {% else %}
+                        <button type="button" class="btn customcolor1 btn-lg" data-bs-toggle="modal" data-bs-target="#Register_form_Modal">ثبت نام نکردی؟ هنوز دیر نشده</button>
+                    {% endif %}
+
                   <button class="btn customcolor2 btn-lg rounded-bottom" data-bs-toggle="modal" data-bs-target="#register_info_Modal">شرایط ثبت نام</button>
                   <!-- Modal -->
                   <div class="modal fade" id="register_info_Modal" tabindex="-1" aria-labelledby="register_info_ModalLabel" aria-hidden="true">
