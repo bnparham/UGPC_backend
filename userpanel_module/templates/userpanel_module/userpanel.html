@@ -77,7 +77,10 @@
 {#                            <li class="py-2"> - کاربر اول</li>#}
 {#                            <li class="py-2"> - کاربر دوم</li>#}
                         </ul>
-                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#LeaveTeam_form_ModalLabel">انصراف از تیم</button>
+                        {% if not user.is_capitan and user.has_team %}
+                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#LeaveTeam_form_ModalLabel">انصراف از تیم</button>
+                        {% endif %}
+
                         <button class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#ChangeUserInfo_form_ModalLabel">ویرایش اطلاعات کاربری</button>
                         <!-- LeaveTeam Modal -->
                         <div dir="ltr" class="modal fade" id="LeaveTeam_form_ModalLabel" tabindex="-1" aria-labelledby="LeaveTeam_form_ModalLabel" aria-hidden="true">
@@ -88,9 +91,11 @@
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                <form id="form-modal" class="d-flex flex-column align-items-center w-100">
+                                <form action="{% url 'leave-team' %}" method="post" id="form-modal" class="d-flex flex-column align-items-center w-100">
+                                    {% csrf_token %}
+                                    <input type="hidden" value="{{ user }}" name="user">
                                     <div class="alert alert-warning m-3 text-center" id="successFoundUserAlert" role="alert">
-                                        آیا از انصراف از حضور در تیم ملوان مطمئن هستید؟
+                                        آیا از انصراف از حضور در تیم {{ userTeam_name }} مطمئن هستید؟
                                     </div>
                                     <button type="submit" class="btn customcolor3 btn-lg"> قبول دارم</button>
                                 </form>
