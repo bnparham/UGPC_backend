@@ -86,6 +86,21 @@
                     حساب کاربری شما با موفقیت ساخته شد. جهت فعال سازی حساب بر روی لینک ارسال شده به آدرس ایمیل خود کلیک کرده و سپس وارد شوید
                     </div>
                 {% endif %}
+                  {% if duplicate_email %}
+                    <div class="alert alert-danger mb-1" style="text-align: center">
+                    ایمیل وارد شده تکراری میباشد
+                    </div>
+                {% endif %}
+                  {% if duplicate_uid %}
+                    <div class="alert alert-danger mb-1" style="text-align: center">
+                    شماره دانجشجویی وارد شده تکراری میباشد
+                    </div>
+                {% endif %}
+                  {% if duplicate_username %}
+                    <div class="alert alert-danger mb-1" style="text-align: center">
+                    نام کاربری وارد شده تکراری میباشد
+                    </div>
+                {% endif %}
                 <h5 class="card-title py-5">رویداد برنامه نویسی پایتون</h5>
                 <h4 class="py-3 border border-info p-3 bg-info bg-opacity-25">&#x1F680;...یه مسابقه خفن قراره به زودی برگزار شه</h4>
                 <div class="d-flex flex-row justify-content-around align-content-center" id="timer">

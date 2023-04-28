@@ -28,8 +28,16 @@ class RegisterView(View):
             user_username = register_form.cleaned_data.get("username")
             user_name = register_form.cleaned_data.get("name")
             user : bool = User.objects.filter(email__iexact=user_email).exists()
+            if(User.objects.filter(username=user_username).exists()):
+                request.session["duplicate_username"] = True
+                return redirect(reverse("home-page"))
+            if(User.objects.filter(uid=user_uid).exists()):
+                request.session["duplicate_uid"] = True
+                return redirect(reverse("home-page"))
             if(user):
-                register_form.add_error("email", "ایمیل وارد شده متعلق به حساب کاربری دیگری میباشد")
+                # register_form.add_error("email", "ایمیل وارد شده متعلق به حساب کاربری دیگری میباشد")
+                request.session["duplicate_email"] = True
+                return redirect(reverse("home-page"))
             else:
                 user_pass = register_form.cleaned_data.get("password")
                 new_user = User(

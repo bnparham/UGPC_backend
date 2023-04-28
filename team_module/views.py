@@ -36,6 +36,8 @@ class acceptInvite(View):
 
         findTeam = teamsModel.objects.get(capitan=sender)
         if(findTeam.teamMate1 == None):
+                reciver.has_team = True
+                reciver.save()
                 findTeam.teamMate1 = reciver
                 findTeam.save()
                 findInvite = inviteModel.objects.get(reciver=reciver,sender=sender,is_accept=False)
@@ -43,10 +45,29 @@ class acceptInvite(View):
                 findInvite.save()
         elif(findTeam.teamMate2 == None):
             findTeam.teamMate2 = reciver
+            reciver.has_team = True
+            reciver.save()
             findTeam.save()
             findInvite = inviteModel.objects.get(reciver=reciver, sender=sender,is_accept=False)
             findInvite.is_accept = True
             findInvite.save()
         else:
             request.session["group_is_full"] = True
+        return redirect(reverse("userPanel"))
+
+class removeUserFromTeamView(View):
+    def post(self, request):
+        teamMateName = request.POST.get("teamMateName")
+        teamMateName:User = User.objects.get(email__iexact=teamMateName)
+        capitan = request.POST.get("capitan")
+        capitan:User = User.objects.get(email__iexact=capitan)
+        findTeam = teamsModel.objects.get(capitan=capitan)
+        if(findTeam.teamMate1 == teamMateName):
+            findTeam.teamMate1 = None
+            teamMateName.has_team = False
+        else:
+            findTeam.teamMate2 = None
+            teamMateName.has_team = False
+        findTeam.save()
+        teamMateName.save()
         return redirect(reverse("userPanel"))

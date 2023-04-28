@@ -116,35 +116,64 @@
                                 <li class="py-2 input-group justify-content-between align-items-center">
                                     {% if team.teamMate1 != None %}
                                         <p class="fs-5 m-0">{{ team.teamMate1 }}</p>
+                                        <form action="{% url 'remove_user' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="teamMateName" value="{{ team.teamMate1 }}">
+                                            <input type="hidden" name="capitan" value="{{ user }}">
+                                            <button class="btn btn-danger">حذف از گروه</button>
+                                        </form>
                                     {% endif %}
                                 </li>
                             <li class="py-2 input-group justify-content-between align-items-center">
                                     {% if team.teamMate2 != None %}
                                         <p class="fs-5 m-0">{{ team.teamMate2 }}</p>
+                                        <form action="{% url 'remove_user' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="teamMateName" value="{{ team.teamMate2 }}">
+                                            <input type="hidden" name="capitan" value="{{ user }}">
+                                            <button class="btn btn-danger">حذف از گروه</button>
+                                        </form>
                                     {% endif %}
                                 </li>
                             </ul>
-                            <button class="btn customcolor3 w-50 m-4" data-bs-toggle="modal" data-bs-target="#addTeamMate_form_ModalLabel">
+                            {% if team.teamMate1 and team.teamMate2 %}
+                                <button class="btn customcolor3 w-50 m-4" data-bs-toggle="modal" data-bs-target="#addTeamMate_form_ModalLabel">
                                 افزودن هم تیمی <i class="fa fa-user-plus" style="font-size:24px"></i>
                             </button>
+                                {% else %}
+                                <button class="btn customcolor3 w-50 m-4" data-bs-toggle="modal" data-bs-target="#addTeamMate_form_ModalLabel">
+                                افزودن هم تیمی <i class="fa fa-user-plus" style="font-size:24px"></i>
+                            </button>
+                                {% endif %}
+
                             <!-- add teamMate Modal -->
                             <div dir="ltr" class="modal fade" id="addTeamMate_form_ModalLabel" tabindex="-1" aria-labelledby="addTeamMate_form_ModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header modal-header-CustomStyle">
+                                        {% if userTeam_name is not None and team.teamMate1 is None or team.teamMate2 is None %}
                                     <h1 class="modal-title fs-5" id="Login_form_ModalLabel"> افزودن هم تیمی</h1>
-                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            {% elif team.teamMate1 is not None and team.teamMate2 is not None %}
+                                            <h1 class="modal-title fs-5" id="Login_form_ModalLabel"> توجه</h1>
+                                            {% elif userTeam_name is None %}
+                                            <h1 class="modal-title fs-5" id="Login_form_ModalLabel">تعیین نام تیم</h1>
+                                            {% endif %}
+                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                     <form action="{% url 'inviteView' %}" method="post" id="form-modal" class="d-flex flex-column align-items-center w-100">
                                         {% csrf_token %}
                                         <div class="mb-3 w-75 text-center">
-                                        <label for="exampleInputEmail1" class="form-label">آدرس ایمیل هم تیمی</label>
-                                        <input name="InviteEmail" type="email" class="form-control" id="exampleInputEmail1">
+                                            {% if userTeam_name is not None and team.teamMate1 is None or team.teamMate2 is None %}
+                                                <label for="exampleInputEmail1" class="form-label">آدرس ایمیل هم تیمی</label>
+                                                <input name="InviteEmail" type="email" class="form-control" id="exampleInputEmail1">
+                                                <button type="submit" class="btn customcolor3 btn-lg"> ارسال درخواست</button>
+                                                {% elif team.teamMate1 is not None and team.teamMate2 is not None %}
+                                                <label for="exampleInputEmail1" class="form-label">ظرفیت تیم شما تکمیل شده است</label>
+                                                {% elif userTeam_name is None %}
+                                                <label for="exampleInputEmail1" class="form-label">ابتدا میبایست نام تیم خود را مشخص کنید</label>
+                                                {% endif %}
                                         </div>
-                                        <!-- if status is true show this button -->
-                                        <button type="submit" class="btn customcolor3 btn-lg"> ارسال درخواست</button>
-                                        <!-- check type of user in database -->
                                     </form>
                                     </div>
                                 </div>
