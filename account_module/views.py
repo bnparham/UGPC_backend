@@ -20,7 +20,7 @@ from .tokens import account_activation_token
 
 class RegisterView(View):
     def get(self, request):
-        register_form = Register_Form()
+        register_form = Register_Form(request=request)
         context = {
             "register_form": register_form
         }
@@ -29,7 +29,7 @@ class RegisterView(View):
         return render(request, "account_module/register_page.html", context)
 
     def post(self, request):
-        register_form = Register_Form(request.POST)
+        register_form = Register_Form(request.POST, request=request)
         if(register_form.is_valid()):
             user_email = register_form.cleaned_data.get("email")
             user_uid = register_form.cleaned_data.get("uid")

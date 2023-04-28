@@ -4,6 +4,11 @@ from django.core import validators
 
 
 class Register_Form(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(Register_Form, self).__init__(*args, **kwargs)
+
     name = forms.CharField(
         label="نام و نام خانوادگی",
         max_length=100,
@@ -73,6 +78,7 @@ class Register_Form(forms.Form):
         repeat_password = self.cleaned_data.get("repeat_password")
         if(password == repeat_password):
             return repeat_password
+        self.request.session["notMatch_pass_rePass"] = True
         raise ValidationError("رمز عبور مطابقت ندارد")
 
 class Login_Form(forms.Form):
