@@ -71,3 +71,15 @@ class removeUserFromTeamView(View):
         findTeam.save()
         teamMateName.save()
         return redirect(reverse("userPanel"))
+
+class rejectInvite(View):
+    def post(self, request):
+        sender = request.POST.get("sender")
+        reciver = request.POST.get("reciver")
+        sender = User.objects.get(email__iexact=sender)
+        reciver = User.objects.get(email__iexact=reciver)
+        findInvite = inviteModel.objects.get(sender=sender,reciver=reciver)
+        findInvite.is_reject = True
+        findInvite.save()
+        return redirect(reverse("userPanel"))
+

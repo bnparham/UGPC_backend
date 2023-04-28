@@ -26,7 +26,7 @@ class userPanelView(View):
             team = None
             teamName = None
 
-        invites = inviteModel.objects.filter(reciver=user, is_accept=False)
+        invites = inviteModel.objects.filter(reciver=user, is_accept=False, is_reject=False)
         context = {
             "user": user,
             "userTeam_name": teamName,

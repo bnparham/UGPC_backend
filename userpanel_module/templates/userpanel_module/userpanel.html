@@ -165,7 +165,7 @@
                                                 {% if team.teamMate1 is None or team.teamMate2 is None %}
                                                     <label for="exampleInputEmail1" class="form-label">آدرس ایمیل هم تیمی</label>
                                                     <input name="InviteEmail" type="email" class="form-control" id="exampleInputEmail1">
-                                                    <button type="submit" class="btn customcolor3 btn-lg"> ارسال درخواست</button>
+                                                    <button type="submit" class="btn customcolor3 btn-lg mt-3"> ارسال درخواست</button>
                                                 {% elif team.teamMate1 is not None and team.teamMate2 is not None %}
                                                 <label for="exampleInputEmail1" class="form-label">ظرفیت تیم شما تکمیل شده است</label>
                                                 {% endif %}
@@ -209,7 +209,7 @@
                                     <p style="font-size: 17px" class="m-0">{{ invite.sender.username }} شما را دعوت کرده است</p>
                                     <div class="btn-group gap-3">
                                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AccpentInvite_form_ModalLabel">پذیرفتن</button>
-                                        <button class="btn btn-danger">رد کردن</button>
+                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#RejectInvite_form_ModalLabel">رد کردن</button>
                                     </div>
                                 </li>
                                     {% if group_is_full %}
@@ -240,6 +240,30 @@
                                         </div>
                                     </div>
                                     <!-- AccpentInvite form Modal -->
+
+                                    <!-- RejectInvite Modal -->
+                                    <div dir="ltr" class="modal fade" id="RejectInvite_form_ModalLabel" tabindex="-1" aria-labelledby="AccpentInvite_form_ModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header modal-header-CustomStyle">
+                                            <h1 class="modal-title fs-5" id="Login_form_ModalLabel">  توجه</h1>
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                            <form action="{% url 'reject-invite' %}" method="post" id="form-modal" class="d-flex flex-column align-items-center w-100">
+                                                {% csrf_token %}
+                                                <div class="alert alert-warning m-3 text-center" id="successFoundUserAlert" role="alert">
+                                                    از رد کردن این درخواست مطمن هستید؟
+                                                </div>
+                                                <input type="hidden" name="sender" value="{{ invite.sender }}">
+                                                <input type="hidden" name="reciver" value="{{ invite.reciver }}">
+                                                <button type="submit" class="btn customcolor3 btn-lg"> بله</button>
+                                            </form>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <!-- RejectInvite form Modal -->
 
                                 {% endfor %}
                             </ul>
