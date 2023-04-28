@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- bootstrap link -->
-    <link rel="stylesheet" href="{% static 'Bootstrap@5.2.3/bootstrap.min.css'%}">
+{#    <link rel="stylesheet" href="{% static 'Bootstrap@5.2.3/bootstrap.min.css'%}">#}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <!-- custom css links -->
     <link rel="stylesheet" href="{% static 'Css/settings.css'%}" />
 </head>
@@ -16,7 +17,7 @@
     <div class="d-flex justify-content-center p-5" style="text-align: right;">
         <div class="alert alert-success w-50" role="alert">
             <h4 class="alert-heading mb-4">ایمیل فعال سازی</h4>
-            <p style="font-size: 15px;">{{full_name}} به GUPC خوش اومدی</p>
+            <p style="font-size: 15px;">UGPC خوش اومدی به {{full_name}}</p>
             <p style="font-size: 15px;">جهت فعال سازی حساب کاربری ، روی لینک زیر کلیک کن</p>
             <hr>
             <a style="text-decoration: none;" href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}" class="mb-0">فعال سازی حساب کاربری</a>

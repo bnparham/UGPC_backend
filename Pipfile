@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 django = "*"
 django-render-partial = "*"
+six = "*"
 
 [dev-packages]
 
