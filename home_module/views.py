@@ -7,7 +7,7 @@ from rules_module.models import rulesModel
 class HomePageView(View):
     def get(self,request):
 
-        rules_model = rulesModel.objects.all()
+        rules_model = rulesModel.objects.filter(is_show=True)
 
         email_pass_wrong_msg = request.session.get("email_pass_wrong_msg", False)
         active_acc_msg = request.session.get("active_acc_msg", False)
