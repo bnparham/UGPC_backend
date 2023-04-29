@@ -48,40 +48,42 @@ class RegisterView(View):
                 return redirect(reverse("home-page"))
             else:
                 user_pass = register_form.cleaned_data.get("password")
-                new_user = User(
-                    email=user_email,
-                    is_active=False,
-                    email_activation_code=0,
-                    uid=user_uid,
-                    first_name=user_name,
-                    username=user_username,
-                )
-                new_user.set_password(user_pass)
-                new_user.save()
-                new_user.email_activation_code = account_activation_token.make_token(new_user)
-                new_user.save()
+                if(user_email!="" or user_username!="" or user_name!="" or user_pass!=""):
+                    new_user = User(
+                        email=user_email,
+                        is_active=False,
+                        email_activation_code=0,
+                        uid=user_uid,
+                        first_name=user_name,
+                        username=user_username,
+                    )
+                    new_user.set_password(user_pass)
+                    new_user.save()
+                    new_user.email_activation_code = account_activation_token.make_token(new_user)
+                    new_user.save()
                 
-                #email
-                to_email=user_email
-                mail_subject = 'حساب کاربری رو فعال کن!'
-                message = render_to_string('account_module/email_activation.html', {
-                    'user': user_username,
-                    'full_name': f'{user_name}',
-                    'domain': get_current_site(request).domain,
-                    'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
-                    'token': account_activation_token.make_token(new_user),
-                    'protocol': 'https' if request.is_secure() else 'http'
-                })
-                email = EmailMessage(mail_subject, message, to=[to_email])
-                email.content_subtype = 'html'
-                
-                if email.send():
-                    request.session["register_msg"] = True
+                    #email
+                    to_email=user_email
+                    mail_subject = 'حساب کاربری رو فعال کن!'
+                    message = render_to_string('account_module/email_activation.html', {
+                        'user': user_username,
+                        'full_name': f'{user_name}',
+                        'domain': get_current_site(request).domain,
+                        'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
+                        'token': account_activation_token.make_token(new_user),
+                        'protocol': 'https' if request.is_secure() else 'http'
+                    })
+                    email = EmailMessage(mail_subject, message, to=[to_email])
+                    email.content_subtype = 'html'
+                    if email.send():
+                        request.session["register_msg"] = True
+                    else:
+                        request.session["failed_register_msg"] = True
+                        new_user.delete()
+                    return redirect(reverse("home-page"))
                 else:
-                    request.session["failed_register_msg"] = True
-                    new_user.delete()
-                                        
-                return redirect(reverse("home-page"))
+                    request.session["completeAllfields_register_msg"] = True
+                    return redirect(reverse("home-page"))
         return redirect(reverse("home-page"))
     
     def activate(request, uidb64, token):

@@ -164,6 +164,11 @@
                    نام کاربری جدید شما قبلا توسط شخص دیگری مورد استفاده قرار گرفته است
                   </div>
               {% endif %}
+              {% if completeAllfields_register_msg %}
+                  <div class="alert alert-danger mb-1" style="text-align: center">
+                   لطفا تمام مقادیر را به درستی تکمیل کنید
+                  </div>
+              {% endif %}
                 <h5 class="card-title py-5">رویداد برنامه نویسی پایتون</h5>
                 <h4 class="py-3 border border-info p-3 bg-info bg-opacity-25">&#x1F680;...یه مسابقه خفن قراره به زودی برگزار شه</h4>
                 <div class="d-flex flex-row justify-content-around align-content-center" id="timer">
