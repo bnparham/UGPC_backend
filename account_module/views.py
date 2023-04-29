@@ -49,7 +49,7 @@ class RegisterView(View):
             else:
                 user_pass = register_form.cleaned_data.get("password")
                 if(user_email!="" or user_username!="" or user_name!="" or user_pass!="" or user_uid != ""):
-                    if(len(user_pass) <= 8):
+                    if(len(user_pass) < 8):
                         request.session["password_len_error_register_msg"] = True
                         return redirect(reverse("home-page"))
                     if(len(user_uid) != 13):
@@ -318,7 +318,7 @@ class ResetPassword(View):
             if user is None:
                 return redirect(reverse('home-page'))
             user_new_pass = reset_pass_form.cleaned_data.get('password')
-            if (len(user_new_pass) <= 8):
+            if (len(user_new_pass) < 8):
                 request.session["password_len_error_reset_msg"] = True
                 return redirect(reverse("reset_password_page" ,kwargs={"active_code":user.email_activation_code}))
             user_new_confirmPass = reset_pass_form.cleaned_data.get("confirm_password")
