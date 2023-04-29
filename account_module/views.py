@@ -48,9 +48,12 @@ class RegisterView(View):
                 return redirect(reverse("home-page"))
             else:
                 user_pass = register_form.cleaned_data.get("password")
-                if(user_email!="" or user_username!="" or user_name!="" or user_pass!=""):
+                if(user_email!="" or user_username!="" or user_name!="" or user_pass!="" or user_uid != ""):
                     if(len(user_pass) <= 8):
                         request.session["password_len_error_register_msg"] = True
+                        return redirect(reverse("home-page"))
+                    if(len(user_uid) != 13):
+                        request.session["uid_len_error_register_msg"] = True
                         return redirect(reverse("home-page"))
                     new_user = User(
                         email=user_email,
@@ -64,7 +67,7 @@ class RegisterView(View):
                     new_user.save()
                     new_user.email_activation_code = account_activation_token.make_token(new_user)
                     new_user.save()
-                
+
                     #email
                     to_email=user_email
                     mail_subject = 'حساب کاربری رو فعال کن!'
