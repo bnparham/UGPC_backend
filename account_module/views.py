@@ -205,11 +205,11 @@ class changeUserType(View):
                 teamsModel.objects.filter(capitan=user).delete()
             user.save()
         elif is_cap == 1 and user.is_capitan:
-            group_name = request.POST.get("teamName")
+            group_name:str = request.POST.get("teamName")
             if findUserTeam:
                 teamName = teamsModel.objects.get(capitan=user)
-                if teamName.teamName != group_name and group_name != "":
-                    teamName.teamName = group_name
+                if teamName.teamName != group_name and group_name != "" and len(group_name.strip())!=0:
+                    teamName.teamName = group_name.strip()
                     teamName.save()
             else:
                 if(group_name == None or group_name == "" or len(group_name)==0):
