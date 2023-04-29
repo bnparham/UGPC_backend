@@ -186,6 +186,14 @@ class changeUserType(View):
             user.is_capitan = False
             user.has_team = False
             if findUserTeam:
+                if(teamsModel.objects.get(capitan=user).teamMate1 is not None):
+                    teammate1 = teamsModel.objects.get(capitan=user).teamMate1
+                    teammate1.has_team = False
+                    teammate1.save()
+                elif(teamsModel.objects.get(capitan=user).teamMate2 is not None):
+                    teammate2 = teamsModel.objects.get(capitan=user).teamMate2
+                    teammate2.has_team = False
+                    teammate2.save()
                 teamsModel.objects.filter(capitan=user).delete()
             user.save()
         elif is_cap == 1 and user.is_capitan:
