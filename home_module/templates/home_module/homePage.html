@@ -9,10 +9,10 @@
 {% block header %}
     <header style="height: 110vh;background-image: url({% static 'Images/3-d5.jpg' %}")>
         <!-- navbar -->
-        <nav dir="rtl" class="navbar navbar-expand-lg bg-custom navbar-dark py-3">
+        <nav dir="rtl" class="navbar navbar-expand-lg bg-custom navbar-dark py-0">
           <div class="container-fluid d-md-flex">
-            <a class="navbar-brand d-flex align-content-center flex-grow-1 justify-content-center flex-lg-grow-0" href="{% url 'home-page' %}">
-              <img src="{% static 'Images/logo1.svg' %}" width="100" height="20">
+            <a class="navbar-brand d-flex align-content-center flex-grow-1 justify-content-center flex-lg-grow-0 p-0" href="{% url 'home-page' %}">
+              <img src="{% static 'Images/UG.png' %}" width="100" height="100">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -180,7 +180,7 @@
                   </div>
               {% endif %}
                 <h5 class="card-title py-5">رویداد برنامه نویسی پایتون</h5>
-                <h4 class="py-3 border border-info p-3 bg-info bg-opacity-25">&#x1F680;...یه مسابقه خفن قراره به زودی برگزار شه</h4>
+                <h4 class="py-3 border border-info p-3 bg-info bg-opacity-25">&#x1F680;...قراره به زودی یه مسابقه خفن برگزار شه</h4>
                 <div class="d-flex flex-row justify-content-around align-content-center" id="timer">
                   <div id="day-container" class="d-flex flex-column align-items-center p-4">
                     <div id="days">00</div>
