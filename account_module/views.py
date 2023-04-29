@@ -230,9 +230,14 @@ class editUserInfo(View):
         user = User.objects.get(email__iexact=user)
         if(edituserinfo_form.is_valid()):
             get_username = edituserinfo_form.cleaned_data.get("username")
+            if(user.username != get_username):
+                if(User.objects.filter(username__iexact=get_username).exists()):
+                    request.session["duplicateUsername_edit"] = True
+                    return redirect((reverse("home-page")))
+                else:
+                    user.username = get_username
             get_name = edituserinfo_form.cleaned_data.get("name")
             get_uid = edituserinfo_form.cleaned_data.get("uid")
-            user.username = get_username
             user.first_name = get_name
             user.uid = get_uid
             user.save()
