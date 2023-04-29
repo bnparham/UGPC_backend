@@ -21,6 +21,7 @@ class HomePageView(View):
         reset_pass_success_msg = request.session.get("reset_pass_success_msg", False)
         duplicateUsername_edit = request.session.get("duplicateUsername_edit", False)
         completeAllfields_register_msg = request.session.get("completeAllfields_register_msg", False)
+        password_len_error_register_msg = request.session.get("password_len_error_register_msg", False)
         
         if (email_pass_wrong_msg): del (request.session["email_pass_wrong_msg"])
         if (active_acc_msg): del (request.session["active_acc_msg"])
@@ -38,6 +39,7 @@ class HomePageView(View):
         if(reset_pass_success_msg) : del (request.session["reset_pass_success_msg"])
         if(duplicateUsername_edit) : del(request.session["duplicateUsername_edit"])
         if(completeAllfields_register_msg) : del(request.session["completeAllfields_register_msg"])
+        if(password_len_error_register_msg) : del(request.session["password_len_error_register_msg"])
         
 
         context = {
@@ -57,5 +59,6 @@ class HomePageView(View):
             "reset_pass_success_msg" : reset_pass_success_msg,
             "duplicateUsername_edit" : duplicateUsername_edit,
             "completeAllfields_register_msg" : completeAllfields_register_msg,
+            "password_len_error_register_msg" : password_len_error_register_msg,
         }
         return render(request, 'home_module/homePage.html', context)

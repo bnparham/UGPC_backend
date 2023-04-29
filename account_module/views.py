@@ -49,6 +49,9 @@ class RegisterView(View):
             else:
                 user_pass = register_form.cleaned_data.get("password")
                 if(user_email!="" or user_username!="" or user_name!="" or user_pass!=""):
+                    if(len(user_pass) < 8):
+                        request.session["password_len_error_register_msg"] = True
+                        return redirect(reverse("home-page"))
                     new_user = User(
                         email=user_email,
                         is_active=False,
