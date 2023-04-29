@@ -44,6 +44,10 @@ class acceptInvite(View):
                 findInvite = inviteModel.objects.filter(reciver=reciver, sender=sender, is_accept=False, is_reject=False).last()
                 findInvite.is_accept = True
                 findInvite.save()
+                other_invites = inviteModel.objects.filter(reciver=reciver, is_reject=False).all()
+                for invite in other_invites:
+                    invite.is_reject = True
+                    invite.save()
         elif(findTeam.teamMate2 == None):
             findTeam.teamMate2 = reciver
             reciver.has_team = True
@@ -52,6 +56,10 @@ class acceptInvite(View):
             findInvite = inviteModel.objects.filter(reciver=reciver, sender=sender,is_accept=False, is_reject=False).last()
             findInvite.is_accept = True
             findInvite.save()
+            other_invites = inviteModel.objects.filter(reciver=reciver, is_reject=False).all()
+            for invite in other_invites:
+                invite.is_reject = True
+                invite.save()
         else:
             request.session["group_is_full"] = True
         return redirect(reverse("userPanel"))
