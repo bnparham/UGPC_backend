@@ -49,7 +49,7 @@ class RegisterView(View):
             else:
                 user_pass = register_form.cleaned_data.get("password")
                 if(user_email!="" or user_username!="" or user_name!="" or user_pass!=""):
-                    if(len(user_pass) < 8):
+                    if(len(user_pass) <= 8):
                         request.session["password_len_error_register_msg"] = True
                         return redirect(reverse("home-page"))
                     new_user = User(
@@ -291,7 +291,10 @@ class ResetPassword(View):
     def get(self, request, active_code):
 
         reset_pass_notMatch_confirmPass = request.session.get("reset_pass_notMatch_confirmPass", False)
+        password_len_error_reset_msg = request.session.get("password_len_error_reset_msg", False)
+
         if (reset_pass_notMatch_confirmPass): del (request.session["reset_pass_notMatch_confirmPass"])
+        if (password_len_error_reset_msg) : del (request.session["password_len_error_reset_msg"])
 
         user = User.objects.filter(email_activation_code=active_code).first()
         if user is None:
@@ -301,6 +304,7 @@ class ResetPassword(View):
             'reset_pass_form': reset_pass_form,
             'user': user,
             "reset_pass_notMatch_confirmPass" : reset_pass_notMatch_confirmPass,
+            "password_len_error_reset_msg" : password_len_error_reset_msg,
         }
         return render(request, 'account_module/reset_password.html', context)
 
@@ -309,8 +313,11 @@ class ResetPassword(View):
         user: User = User.objects.filter(email_activation_code=active_code).first()
         if reset_pass_form.is_valid():
             if user is None:
-                return redirect(reverse('login_page'))
+                return redirect(reverse('home-page'))
             user_new_pass = reset_pass_form.cleaned_data.get('password')
+            if (len(user_new_pass) <= 8):
+                request.session["password_len_error_reset_msg"] = True
+                return redirect(reverse("reset_password_page" ,kwargs={"active_code":user.email_activation_code}))
             user_new_confirmPass = reset_pass_form.cleaned_data.get("confirm_password")
             if(user_new_pass == user_new_confirmPass):
                 user.set_password(user_new_pass)
