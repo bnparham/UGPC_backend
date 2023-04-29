@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.views import View
+from rules_module.models import rulesModel
 
 # Create your views here.
 
 class HomePageView(View):
     def get(self,request):
+
+        rules_model = rulesModel.objects.all()
+
         email_pass_wrong_msg = request.session.get("email_pass_wrong_msg", False)
         active_acc_msg = request.session.get("active_acc_msg", False)
         register_msg = request.session.get("register_msg", False)
@@ -62,5 +66,7 @@ class HomePageView(View):
             "completeAllfields_register_msg" : completeAllfields_register_msg,
             "password_len_error_register_msg" : password_len_error_register_msg,
             "uid_len_error_register_msg" : uid_len_error_register_msg,
+            # models here
+            "rules_model" : rules_model,
         }
         return render(request, 'home_module/homePage.html', context)

@@ -217,27 +217,21 @@
                         </div>
                         <div class="modal-body">
                           <div class="d-flex flex-column text-dark" style="text-align: right;">
+                              {% for rules in rules_model %}
                               <div class="d-flex justify-content-end p-3">
-                                <p class="register-info-desc m-0 pe-2 d-flex flex-row-reverse"><span class="ps-2">28</span>(روز خیام/روز ریاضیات)اردیبهشت</p>
-                                <p class="register-info-title fw-bold m-0">زمان برگزاری مسابقه</p>
+                                <p dir="rtl" class="register-info-desc m-0 pe-2 d-flex flex-row-reverse">{{ rules.description }}</p>
+                                <p dir="rtl" class="register-info-title fw-bold m-0">{{ rules.title }} : </p>
                               </div>
-                              <div class="d-flex justify-content-end p-3">
-                                <p class="register-info-desc m-0 pe-2">یک نفر کاپیتان و حداکثر 2 هم تیمی</p>
-                                <p class="register-info-title fw-bold m-0">اعضای تیم</p>
-                              </div>
-                              <div class="d-flex justify-content-end p-3">
-                                <p class="register-info-desc m-0 pe-2 d-flex flex-row-reverse"><span>10</span><span class="pe-2">سوال</span></p>
-                                <p class="register-info-title fw-bold m-0">تعداد سوالات</p>
-                              </div>
-                              <div class="d-flex flex-column justify-content-between p-3">
-                                <p class="register-info-title fw-bold m-0 pb-2">اطلاعات مورد نیاز برای ثبت نام</p>
-                                <ul class="register-info-desc">
-                                  <li>نام و نام خانوادگی</li>
-                                  <li>شماره دانشجویی</li>
-                                  <li>آدرس ایمیل</li>
-                                  <li>نام تیم</li>
-                                </ul>
-                              </div>
+                              {% endfor %}
+{#                              <div class="d-flex flex-column justify-content-between p-3">#}
+{#                                <p class="register-info-title fw-bold m-0 pb-2">اطلاعات مورد نیاز برای ثبت نام</p>#}
+{#                                <ul class="register-info-desc">#}
+{#                                  <li>نام و نام خانوادگی</li>#}
+{#                                  <li>شماره دانشجویی</li>#}
+{#                                  <li>آدرس ایمیل</li>#}
+{#                                  <li>نام تیم</li>#}
+{#                                </ul>#}
+{#                              </div>#}
                               <p class="register-info-desc fs-5 text-bg-info">هزینه شرکت در مسابقه رایگان است</p>
                           </div>
                         </div>

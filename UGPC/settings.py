@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'userpanel_module',
     'links_module',
     'team_module',
+    "rules_module",
 ]
 
 MIDDLEWARE = [
