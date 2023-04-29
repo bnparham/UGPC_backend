@@ -124,19 +124,6 @@ class EditUserInfoForm(forms.Form):
             }
         ),
     )
-    email = forms.CharField(
-        label="ایمیل",
-        max_length=100,
-        widget=forms.EmailInput(
-            attrs={
-                "class" : "form-control",
-                "id" : "register_email"
-            }
-        ),
-        validators=[
-            validators.EmailValidator(message="ایمیل صحیح نمیباشد"),
-        ]
-    )
     uid = forms.CharField(
         label="شماره دانشجویی",
         max_length=100,

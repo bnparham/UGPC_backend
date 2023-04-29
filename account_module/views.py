@@ -217,7 +217,7 @@ class editUserInfo(View):
     def get(self, request):
         user = self.request.user
         user = User.objects.get(email__iexact=user)
-        initial = {"email":user.email,"username":user.username,"name":user.first_name,"uid":user.uid}
+        initial = {"username":user.username,"name":user.first_name,"uid":user.uid}
         edituserinfo_form = EditUserInfoForm(initial=initial)
         context = {
             "edit_form" : edituserinfo_form
@@ -229,11 +229,9 @@ class editUserInfo(View):
         user = self.request.user
         user = User.objects.get(email__iexact=user)
         if(edituserinfo_form.is_valid()):
-            get_email = edituserinfo_form.cleaned_data.get("email")
             get_username = edituserinfo_form.cleaned_data.get("username")
             get_name = edituserinfo_form.cleaned_data.get("name")
             get_uid = edituserinfo_form.cleaned_data.get("uid")
-            user.email = get_email
             user.username = get_username
             user.first_name = get_name
             user.uid = get_uid
