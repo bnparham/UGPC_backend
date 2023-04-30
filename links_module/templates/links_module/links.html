@@ -18,7 +18,7 @@
                     {% endfor %}
                 {% endif %}
 
-                <div class="d-flex d-md-none d-grid gap-2 justify-content-center">
+                <div class="d-flex d-lg-none d-grid gap-2 justify-content-center p-4">
                     {% if request.user.is_authenticated %}
                         <button class="btn bg-transparent text-white">خوش اومدی {{ request.user.username }}</button>
                         <a href="{% url 'logout_page' %}" class="btn btn-danger">خروج</a>
@@ -26,6 +26,5 @@
                         <button class="btn bg-login w-25" data-bs-toggle="modal" data-bs-target="#Login_form_Modal">ورود</button>
                         <button class="btn bg-register w-25" data-bs-toggle="modal" data-bs-target="#Register_form_Modal">عضویت</button>
                     {% endif %}
-
                 </div>
-              </ul>
+</ul>
