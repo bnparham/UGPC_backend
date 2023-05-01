@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # installed app
     'django',
     'django_render_partial',
+    'mysql',
     # modules
     'home_module',
     'account_module',
